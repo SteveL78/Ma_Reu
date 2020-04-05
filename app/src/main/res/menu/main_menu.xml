@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Création du menu Toutes les réunions -->
+    <item
+        android:id="@+id/all_meetings"
+        android:title="Toutes les réunions"
+        android:icon="@drawable/ic_icon_main_menu_24dp"
+        app:showAsAction="never"/>
+
+
+    <!-- Création du menu Trier -->
+    <item
+        android:id="@+id/select_menu"
+        app:showAsAction="never"
+        android:title="@string/select_item">
+
+        <!-- Création du sous-menu Trier -->
+        <menu>
+            <item
+                android:id="@+id/select_by_room"
+                android:checkable="false"
+                android:title="par salle" />
+            <item
+                android:id="@+id/select_by_ascending_date"
+                android:checkable="false"
+                android:title="par date croissante" />
+            <item
+                android:id="@+id/select_by_increasing_date"
+                android:checkable="false"
+                android:title="par date décroissante" />
+        </menu>
+    </item>
+
+
+    <!-- Création du menu filtrer -->
+    <item
+        android:id="@+id/filter_menu"
+        app:showAsAction="never"
+        android:title="@string/filtrer_item">
+
+        <!-- Création du sous-menu Filtrer -->
+        <menu>
+            <item
+                android:id="@+id/filter_by_date"
+                android:checkable="false"
+                android:title="Sélectionner une date" />
+
+            <item
+                android:id="@+id/filter_by_room"
+                android:title="Sélectionner une salle">
+
+                <menu>
+                    <item
+                        android:id="@+id/Mario"
+                        android:title="@string/room_01" />
+
+                    <item
+                        android:id="@+id/Luigi"
+                        android:title="@string/room_02" />
+
+                    <item
+                        android:id="@+id/Peach"
+                        android:title="@string/room_03" />
+
+                    <item
+                        android:id="@+id/Toad"
+                        android:title="@string/room_04" />
+
+                    <item
+                        android:id="@+id/Yoshi"
+                        android:title="@string/room_05" />
+
+                    <item
+                        android:id="@+id/Funky_Kong"
+                        android:title="@string/room_06" />
+
+                    <item
+                        android:id="@+id/Wario"
+                        android:title="@string/room_07" />
+
+
+                    <item
+                        android:id="@+id/Geno"
+                        android:title="@string/room_08" />
+
+                    <item
+                        android:id="@+id/Pauline"
+                        android:title="@string/room_09" />
+
+                    <item
+                        android:id="@+id/Tiara"
+                        android:title="@string/room_10" />
+                </menu>
+            </item>
+        </menu>
+    </item>
+</menu>
