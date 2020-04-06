@@ -8,8 +8,6 @@ package lamzone.com.service;
 import java.util.List;
 
 import lamzone.com.model.Meeting;
-import lamzone.com.model.Participants;
-import lamzone.com.model.Room;
 
 /**
  * Dummy mock for the Api

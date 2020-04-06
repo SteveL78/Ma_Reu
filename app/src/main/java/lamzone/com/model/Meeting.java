@@ -1,6 +1,7 @@
 package lamzone.com.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,8 +20,8 @@ public class Meeting implements Serializable {
     private String endTime;     // heure de fin de la réunion
     private String startDate;   // date de début de la réunion
 
-    private String room;  // n° de la salle
-    private String participants; // email des particpants
+    private Room room;  // n° de la salle
+    private List<Participant> participants; // email des particpants
 
     private boolean roomIsFree;     // salle libre ?
 
@@ -32,7 +33,7 @@ public class Meeting implements Serializable {
      * @param object
      * @param room
      */
-    public Meeting(int id, String object, String startTime, String endTime, String startDate, String room, String participants) {
+    public Meeting(int id, String object, String startTime, String endTime, String startDate, Room room, List<Participant> participants) {
         this.id = id;
         this.object = object;
         this.startTime = startTime;
@@ -83,7 +84,7 @@ public class Meeting implements Serializable {
     }
 
     public String getParticipants() {
-        return participants;
+        return Participant;
     }
 
 

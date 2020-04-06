@@ -6,7 +6,7 @@
     <item
         android:id="@+id/all_meetings"
         android:title="Toutes les réunions"
-        android:icon="@drawable/ic_icon_main_menu_24dp"
+        android:icon="@drawable/ic_filter_list_white_24dp"
         app:showAsAction="never"/>
 
 
@@ -38,7 +38,7 @@
     <item
         android:id="@+id/filter_menu"
         app:showAsAction="never"
-        android:title="@string/filtrer_item">
+        android:title="@string/filter_item">
 
         <!-- Création du sous-menu Filtrer -->
         <menu>
@@ -73,7 +73,7 @@
                         android:title="@string/room_05" />
 
                     <item
-                        android:id="@+id/Funky_Kong"
+                        android:id="@+id/Tiara"
                         android:title="@string/room_06" />
 
                     <item
@@ -90,7 +90,7 @@
                         android:title="@string/room_09" />
 
                     <item
-                        android:id="@+id/Tiara"
+                        android:id="@+id/Funky_Kong"
                         android:title="@string/room_10" />
                 </menu>
             </item>
