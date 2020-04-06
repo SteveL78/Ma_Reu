@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">MA réu</string>
+    <string name="app_name">Ma réu</string>
+
+    <string name="select_item">Trier</string>
+    <string name="filter_item">Filtrer</string>
+
+    <string name="room_01">Mario</string>
+    <string name="room_02">Luigi</string>
+    <string name="room_03">Peach</string>
+    <string name="room_04">Toad</string>
+    <string name="room_05">Yoshi</string>
+    <string name="room_06">Tiara</string>
+    <string name="room_07">Wario</string>
+    <string name="room_08">Geno</string>
+    <string name="room_09">Pauline</string>
+    <string name="room_10">Funky Kong</string>
+
 </resources>
