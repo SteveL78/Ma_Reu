@@ -10,9 +10,9 @@ public class Room implements Serializable {
 
     private int id;
     private String nameRoom;
-    private String colorRoom;
+    private int colorRoom;
 
-    public Room(int id, String nameRoom, String colorRoom) {
+    public Room(int id, String nameRoom, int colorRoom) {
         this.id = id;
         this.nameRoom = nameRoom;
         this.colorRoom = colorRoom;
@@ -23,15 +23,15 @@ public class Room implements Serializable {
      * Constructor
      */
 
-    public int getId() {
+    public int getId () {
         return id;
     }
 
-    public String getNameRoom() {
+    public String getName() {
         return nameRoom;
     }
 
-    public String getColorRoom() {
+    public int getColorRoom() {
         return colorRoom;
     }
 

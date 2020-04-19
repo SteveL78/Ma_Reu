@@ -16,14 +16,12 @@ public class Meeting implements Serializable {
      */
     private int id;             // position dans la liste
     private String object;      // objet de la réunion (=réunion A, réunion B, réunion C ...)
-    private String startTime;   // heure de début de la réunion
-    private String endTime;     // heure de fin de la réunion
-    private String startDate;   // date de début de la réunion
+    private String startTime;   // heure de début de la réunion //TODO put Date
+    private String endTime;     // heure de fin de la réunion   //TODO put Date
+    private String startDate;   // date de début de la réunion //TODO remove
 
-    private Room room;  // n° de la salle
+    private Room room;          // n° de la salle
     private List<Participant> participants; // email des particpants
-
-    private boolean roomIsFree;     // salle libre ?
 
 
     /**
@@ -43,50 +41,44 @@ public class Meeting implements Serializable {
         this.room = room;
         this.participants = participants;
 
-        this.roomIsFree = true;
     }
 
 
-    public boolean isRoomIsFree() { return roomIsFree; }
-
-    public void setFree(boolean free) {
-        this.roomIsFree = free;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(String id) { this.id = id; }
-
-    public String getName() {
+    public String getObject() {
         return object;
     }
 
-    public void setObject(String name) {
-        this.object = object;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
     }
 
     public String getStartTime() {
         return startTime;
     }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public String getRoomName() {
-        return room;
-    }
-
-    public String getParticipants() {
-        return Participant;
-    }
-
 
     @Override
     public boolean equals(Object o) {

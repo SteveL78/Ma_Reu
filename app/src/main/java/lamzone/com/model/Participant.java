@@ -30,7 +30,7 @@ public class Participant implements Serializable {
         return participantName;
     }
 
-    public String geteMail() {
+    public String getEMail() {
         return eMail;
     }
 

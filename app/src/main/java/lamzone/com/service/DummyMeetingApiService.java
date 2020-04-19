@@ -5,9 +5,12 @@ package lamzone.com.service;
 //|
 //|----------> Fourni la liste des Meetings à la demande
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lamzone.com.model.Meeting;
+import lamzone.com.model.Participant;
+import lamzone.com.model.Room;
 
 /**
  * Dummy mock for the Api
@@ -16,10 +19,8 @@ import lamzone.com.model.Meeting;
 public class DummyMeetingApiService implements MeetingApiService {
 
     private List<Meeting> meetings = DummyMeetingGenerator.generateMeetings(); // renvoie un meeting
-/*
-    private List<Room> room = RoomGenerator.generateRooms(); // renvoie une room
-    private List<Participants> mParticipants = DummyParticipantsGenerator.generateParticipants(); // renvoie un participant
-*/
+    private List<Room> rooms = RoomGenerator.generateRooms(); // renvoie une room
+    private List<Participant> participants = ParticipantGenerator.generateParticipants(); // renvoie un participant
 
 
     /**
@@ -27,9 +28,8 @@ public class DummyMeetingApiService implements MeetingApiService {
      */
     @Override
     public List<Meeting> getMeetings() {
-        return meetings();
+        return meetings;
     }
-
 
     /**
      * {@inheritDoc}
@@ -37,24 +37,25 @@ public class DummyMeetingApiService implements MeetingApiService {
     @Override
     public void deleteMeeting(Meeting meeting) {
         meetings.remove(meeting);                               // supprime un meeting
+    }
 
-
-        // Mets à jour le meeting
-        public void updateMeeting (Meeting meeting){
-            for (int i = 0; i < meetings.size(); i++) {           // On fait le tour de la liste
-                Meeting meetingTemp = meeting.getId(i);    // On fait défiler la liste tant qu'on obtient pas le meeting attendu
-                if (meeting.equals(meetingTemp)) {          // si le meeting correspond à celui attendu alors on l'affiche
-                    meetings.set(i, meeting);
-                    break;
-                }
+    // Mets à jour le meeting
+    public void updateMeeting(Meeting meeting) {
+        for (int i = 0; i < meetings.size(); i++) {           // On fait le tour de la liste
+            Meeting neighbourTemp = meetings.get(i);    // On fait défiler la liste tant qu'on obtient pas le voisin attendu
+            if (meeting.equals(neighbourTemp) ){          // si le voisin orrespond à celui attendu alors on l'affiche
+                meetings.set(i, meeting);
+                break;
             }
         }
-
-
-        @Override
-        public void addMeeting (Meeting meeting){
-            meetings.add(meeting);
-        }    // Ajouter un meeting
-
-
     }
+/*
+    @Override
+    public void addMeeting (Meeting meeting) {
+        meetings.add(meeting);
+        updateMeeting(meeting);
+        ;}    // Ajouter un meeting
+*/
+
+
+}

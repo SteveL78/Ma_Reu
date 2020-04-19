@@ -10,7 +10,7 @@
         android:id="@+id/item_list_color"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="1dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +28,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/item_list_color"
         app:layout_constraintStart_toEndOf="@+id/item_list_color"
-        app:layout_constraintTop_toTopOf="@+id/item_list_color" />
+        app:layout_constraintTop_toTopOf="@+id/item_list_color"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/item_list_hour"
@@ -54,16 +55,20 @@
         app:layout_constraintStart_toEndOf="@+id/item_list_hour"
         app:layout_constraintTop_toTopOf="@+id/item_list_hour" />
 
+
     <TextView
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
+        android:layout_marginBottom="16dp"
+        android:ellipsize="end"
+        android:lines="1"
         android:text="maxime@lamzon.com"
+        android:textColor="@color/email"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_list_color" />
-
 
     <ImageButton
         android:id="@+id/item_list_delete_button"
@@ -71,9 +76,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:background="@null"
+        android:src="@drawable/ic_delete_btn"
         app:layout_constraintBottom_toBottomOf="@+id/item_list_color"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/item_list_color"
-        android:src="@drawable/ic_delete_btn" />
+        app:layout_constraintTop_toTopOf="@+id/item_list_color" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

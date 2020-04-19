@@ -15,7 +15,7 @@ public interface MeetingApiService {
      * Get all my Meetings
      * @return {@link List}
      */
-    List<Meeting> getMeeting();   // renvoie meeting
+    List<Meeting> getMeetings();   // renvoie meeting
 
     /**
      * Deletes a meeting
@@ -25,23 +25,12 @@ public interface MeetingApiService {
 
 
     /**
-     * Add neighbour
+     * Add meeting
      */
-    void addMeeting(Meeting meeting);     // ajoute un meeting
+    //void addMeeting(Meeting meeting);     // ajoute un meeting
 
 
-    /**
-     * Add to favorite
-     */
-    void addFavorite(Meeting meeting);     // ajoute un meeting aux favoris
 
 
-    /**
-     * Remove for favorite
-     */
-    void removeFavorite(Meeting meeting);          // supprime un meeting des favoris
-
-
-    List<Meeting> getFavoriteMeetings();        // renvoie la liste de meetings favoris
 
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="meeting_rooms_arrays">
+        <item>Mario</item>
+        <item>Luigi</item>
+        <item>Peach</item>
+        <item>Toad</item>
+        <item>Yoshi</item>
+        <item>Tiara</item>
+        <item>Wario</item>
+        <item>Géno</item>
+        <item>Pauline</item>
+        <item>Fonky Kong</item>
+
+    </string-array>
+
+
+</resources>

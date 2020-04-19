@@ -9,7 +9,7 @@ import lamzone.com.service.MeetingApiService;
  */
 public class DI {
 
-    private static MeetingApiService serviceMeeting = (MeetingApiService) new DummyMeetingApiService();
+    private static MeetingApiService serviceMeeting = new DummyMeetingApiService();
 
 
     /**

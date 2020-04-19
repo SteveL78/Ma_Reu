@@ -11,7 +11,7 @@ public class DeleteMeetingEvent {
     /**
      * Meeting to delete
      */
-    public Meeting meeting;
+    private Meeting meeting;
 
 
     /**
@@ -21,5 +21,7 @@ public class DeleteMeetingEvent {
     public DeleteMeetingEvent (Meeting meeting) {
         this.meeting = meeting;
     }
+
+    public Meeting getMeeting() { return meeting; }
 }
-}
+
