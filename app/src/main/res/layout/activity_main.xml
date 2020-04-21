@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:src="@drawable/ic_add_white_48dp"
-        android:backgroundTint="#ED4646"
         android:clickable="true"
         android:focusable="true"
         android:layout_margin="16dp" />

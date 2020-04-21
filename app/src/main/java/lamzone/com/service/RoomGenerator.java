@@ -19,7 +19,7 @@ public class RoomGenerator {
             new Room(35, "Peach", R.drawable.ic_brightness_1_green2_24dp),
             new Room(419, "Toad", R.drawable.ic_brightness_1_green_24dp),
             new Room(5525, "Yoshi", R.drawable.ic_brightness_1_lilas_24dp),
-            new Room(2526, "Tiara", R.drawable.ic_brightness_1_peach1_24dp),
+            new Room(2526, "Harmonie", R.drawable.ic_brightness_1_peach1_24dp),
             new Room(735, "Wario", R.drawable.ic_brightness_1_pink2_24dp),
             new Room(758, "Geno", R.drawable.ic_brightness_1_pink_24dp),
             new Room(369, "Pauline", R.drawable.ic_brightness_1_violet_24dp),

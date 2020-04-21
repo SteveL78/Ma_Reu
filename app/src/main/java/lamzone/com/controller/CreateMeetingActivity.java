@@ -7,25 +7,19 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import android.widget.Toast;
 
 import lamzone.com.R;
 import lamzone.com.di.DI;
 import lamzone.com.service.MeetingApiService;
 
-public class Main2Activity extends AppCompatActivity {
+public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
     private MeetingApiService mApiService = DI.getMeetingApiService();
@@ -44,9 +38,10 @@ public class Main2Activity extends AppCompatActivity {
 
 
     private TextView mRoomTxt;
-    private Spinner mSpinner;
+    private Spinner mSpinnerRoom;
 
     private TextView mParticipantsTxt;
+    private Spinner mSpinnerParticipant;
 
     private Button mSaveBtn;
 
@@ -61,7 +56,10 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_create_meeting);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
         mWelcomeMsg = (TextView) findViewById(R.id.activity_main2_welcome_msg);
@@ -76,6 +74,22 @@ public class Main2Activity extends AppCompatActivity {
 
         mParticipantsTxt = (TextView) findViewById(R.id.participants_textView);
         mSaveBtn = (Button) findViewById(R.id.save_btn);
+
+        mSpinnerParticipant = (Spinner) findViewById(R.id.spinner_participant);
+
+        // SPINNER ROOM
+        mSpinnerRoom = (Spinner) findViewById(R.id.spinner_room);
+        ArrayAdapter <CharSequence> adapterRoom = ArrayAdapter.createFromResource(this, R.array.meeting_rooms_arrays, android.R.layout.simple_spinner_item);
+        adapterRoom.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        mSpinnerRoom.setAdapter(adapterRoom);
+        mSpinnerRoom.setOnItemSelectedListener(this);
+
+        // SPINNER PARTICIPANT
+        mSpinnerParticipant = (Spinner) findViewById(R.id.spinner_participant);
+        ArrayAdapter <CharSequence> adapterParticipant = ArrayAdapter.createFromResource(this, R.array.meeting_participants_arrays, android.R.layout.simple_spinner_item);
+        adapterParticipant.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        mSpinnerParticipant.setAdapter(adapterParticipant);
+        mSpinnerParticipant.setOnItemSelectedListener(this);
 
         // On désactive le bouton enregistrer tant que le
         mSaveBtn.setEnabled(false);
@@ -104,11 +118,7 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
-/*
-    mSpinner = findViewById(R.id.spinner1);
-    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.rooms, android.R.Layout.simple_spinner_item);
 
-*/
 
 
         mApiService = DI.getMeetingApiService();
@@ -122,6 +132,22 @@ public class Main2Activity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+    // Spinner Room
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String text = adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
 

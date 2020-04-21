@@ -54,44 +54,44 @@
                 <menu>
                     <item
                         android:id="@+id/Mario"
-                        android:title="@string/room_01" />
+                        android:title="room_01" />
 
                     <item
                         android:id="@+id/Luigi"
-                        android:title="@string/room_02" />
+                        android:title="room_02" />
 
                     <item
                         android:id="@+id/Peach"
-                        android:title="@string/room_03" />
+                        android:title="room_03" />
 
                     <item
                         android:id="@+id/Toad"
-                        android:title="@string/room_04" />
+                        android:title="room_04" />
 
                     <item
                         android:id="@+id/Yoshi"
-                        android:title="@string/room_05" />
+                        android:title="room_05" />
 
                     <item
                         android:id="@+id/Tiara"
-                        android:title="@string/room_06" />
+                        android:title="room_06" />
 
                     <item
                         android:id="@+id/Wario"
-                        android:title="@string/room_07" />
+                    android:title="room_07" />
 
 
                     <item
                         android:id="@+id/Geno"
-                        android:title="@string/room_08" />
+                        android:title="room_08" />
 
                     <item
                         android:id="@+id/Pauline"
-                        android:title="@string/room_09" />
+                        android:title="room_09" />
 
                     <item
                         android:id="@+id/Funky_Kong"
-                        android:title="@string/room_10" />
+                        android:title="room_10" />
                 </menu>
             </item>
         </menu>

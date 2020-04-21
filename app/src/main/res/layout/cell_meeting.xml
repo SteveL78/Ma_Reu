@@ -26,6 +26,7 @@
         android:text="Réunion A"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/colorCurrentText"
         app:layout_constraintBottom_toBottomOf="@+id/item_list_color"
         app:layout_constraintStart_toEndOf="@+id/item_list_color"
         app:layout_constraintTop_toTopOf="@+id/item_list_color"
@@ -39,6 +40,7 @@
         android:text="14h00"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/colorCurrentText"
         app:layout_constraintBottom_toBottomOf="@+id/item_list_object"
         app:layout_constraintStart_toEndOf="@+id/item_list_object"
         app:layout_constraintTop_toTopOf="@+id/item_list_object" />
@@ -51,6 +53,7 @@
         android:text="Peach"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/colorCurrentText"
         app:layout_constraintBottom_toBottomOf="@+id/item_list_hour"
         app:layout_constraintStart_toEndOf="@+id/item_list_hour"
         app:layout_constraintTop_toTopOf="@+id/item_list_hour" />
@@ -64,9 +67,10 @@
         android:layout_marginBottom="16dp"
         android:ellipsize="end"
         android:lines="1"
-        android:text="maxime@lamzon.com"
-        android:textColor="@color/email"
+        android:text="maxime@lamzone.com"
+        android:textColor="@color/colorEMail"
         android:textSize="12sp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_list_color" />
 

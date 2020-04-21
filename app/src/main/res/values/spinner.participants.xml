@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="meeting_participants_arrays">
+        <item>Charles</item>
+        <item>Steve</item>
+        <item>Latif</item>
+        <item>Jabbar</item>
+        <item>Sophie</item>
+        <item>Timothé</item>
+        <item>Mathias</item>
+        <item>Cassandra</item>
+
+    </string-array>
+
+</resources>

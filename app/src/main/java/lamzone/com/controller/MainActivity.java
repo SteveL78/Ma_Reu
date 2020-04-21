@@ -2,7 +2,6 @@ package lamzone.com.controller;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,13 +10,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         fabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                Intent intent = new Intent(MainActivity.this, CreateMeetingActivity.class);
                 startActivity(intent);
 
             }
@@ -77,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void openMeeting (OpenMeetingEvent event) {
         // On ouvre une nouvelle activité (=Main2Activity) quand on clique sur un meeting de la liste
-        Intent intent = new Intent(this, Main2Activity.class);
+        Intent intent = new Intent(this, CreateMeetingActivity.class);
         intent.putExtra("meeting", event.mMeeting);
         startActivity(intent);
     }

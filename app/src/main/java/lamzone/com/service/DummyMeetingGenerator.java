@@ -17,7 +17,7 @@ public abstract class DummyMeetingGenerator {
 
         // Création de la liste des voisins avec informations devant s'afficher dans sa fiche
         private static List<Meeting> DUMMY_MEETINGS = Arrays.asList(
-                new Meeting(1, "Réunion A", "12h00", "12h45", "12/09/2020", RoomGenerator.DUMMY_ROOMS.get(0),ParticipantGenerator.DUMMY_PARTICIPANTS),
+                new Meeting(1, "Réunion A", "- 12h00 -", "12h45", "12/09/2020", RoomGenerator.DUMMY_ROOMS.get(0),ParticipantGenerator.DUMMY_PARTICIPANTS),
                 new Meeting(2, "Réunion B", "08h00", "08h30", "12/09/2020", RoomGenerator.DUMMY_ROOMS.get(0), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(0))),
                 new Meeting(3, "Réunion C", "16h00", "16h45", "12/09/2020", RoomGenerator.DUMMY_ROOMS.get(2), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(2))),
                 new Meeting(4, "Réunion B", "09h00", "09h45", "12/09/2020", RoomGenerator.DUMMY_ROOMS.get(1), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(1))),
