@@ -30,6 +30,9 @@ public class DummyMeetingApiService implements MeetingApiService {
     public List<Meeting> getMeetings() {
         return meetings;
     }
+    public List<Room> getRooms() {return rooms;}
+   // public List<Participant> getParticipants {return participants;}
+
 
     /**
      * {@inheritDoc}
@@ -42,8 +45,8 @@ public class DummyMeetingApiService implements MeetingApiService {
     // Mets à jour le meeting
     public void updateMeeting(Meeting meeting) {
         for (int i = 0; i < meetings.size(); i++) {           // On fait le tour de la liste
-            Meeting neighbourTemp = meetings.get(i);    // On fait défiler la liste tant qu'on obtient pas le voisin attendu
-            if (meeting.equals(neighbourTemp) ){          // si le voisin orrespond à celui attendu alors on l'affiche
+            Meeting neighbourTemp = meetings.get(i);    // On fait défiler la liste tant qu'on obtient pas la réunion attendue
+            if (meeting.equals(neighbourTemp) ){          // si la réunion correspond à celui attendu alors on l'affiche
                 meetings.set(i, meeting);
                 break;
             }

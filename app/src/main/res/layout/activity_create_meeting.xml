@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:text="Créez votre réunion"
+            tools:text="Créez votre réunion"
             android:layout_gravity="center_horizontal"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -125,7 +125,14 @@
                 android:id="@+id/spinner_room"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:layout_marginTop="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorPrimary"
+                android:entries="@array/meeting_rooms_arrays">
             </Spinner>
         </LinearLayout>
 
@@ -152,7 +159,14 @@
                 android:id="@+id/spinner_participant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:layout_marginTop="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorPrimary"
+                android:entries="@array/meeting_participants_arrays">
             </Spinner>
         </LinearLayout>
 
