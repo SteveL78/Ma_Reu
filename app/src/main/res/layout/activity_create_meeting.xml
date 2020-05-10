@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            tools:text="Créez votre réunion"
+            android:text="@string/create_meeting_title"
             android:layout_gravity="center_horizontal"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="Indiquez le sujet de la réunion"
+            android:hint="@string/choose_topic_hint"
             android:textSize="18sp" />
 
 
@@ -47,7 +47,7 @@
                  android:layout_height="wrap_content"
                  android:layout_marginStart="16dp"
                  android:layout_marginEnd="16dp"
-                 android:text="Elle débute quand ?"
+                 android:text="@string/tv_start_meeting"
                  android:textColor="@color/design_default_color_primary_dark"
                  android:textSize="20sp"
                  android:textStyle="bold" />
@@ -59,7 +59,7 @@
                  android:paddingRight="35dp"
                  android:paddingLeft="35dp"
                  android:layout_gravity="center_horizontal"
-                 android:hint="Cliquer ici"
+                 android:hint="@string/start_btn"
                  android:textSize="18sp" />
 
         </LinearLayout>
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Elle se termine quand ?"
+                android:text="@string/tv_end_meeting"
                 android:textColor="@color/design_default_color_primary_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -93,7 +93,7 @@
                 android:paddingRight="35dp"
                 android:paddingLeft="35dp"
                 android:layout_gravity="center_horizontal"
-                android:hint="Cliquer ici"
+                android:hint="@string/end_btn"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Dans quelle salle ?"
+                android:text="@string/tv_select_room"
                 android:textColor="@color/design_default_color_primary_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -131,8 +131,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/colorPrimary"
-                android:entries="@array/meeting_rooms_arrays">
+                android:background="@color/colorPrimary">
             </Spinner>
         </LinearLayout>
 
@@ -145,18 +144,30 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/select_participant_textView"
+                android:id="@+id/mactv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Avec qui ?"
+                android:text="@string/select_participants_tv"
                 android:textColor="@color/design_default_color_primary_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinner_participant"
+            <MultiAutoCompleteTextView
+                android:id="@+id/multiautocompletetextview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/tv_select_participant"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="DuplicateIds" />
+
+            <Button
+                android:id="@+id/_see_selected_participants_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -164,10 +175,11 @@
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
+                android:text="Voir les participants sélectionnés"
+                android:onClick="Participants sélectionnés"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/colorPrimary"
-                android:entries="@array/meeting_participants_arrays">
-            </Spinner>
+                android:background="@color/colorPrimary">
+            </Button>
         </LinearLayout>
 
         <Button
@@ -178,7 +190,7 @@
             android:background="@color/design_default_color_primary_dark"
             android:padding="15dp"
             android:layout_marginTop="50dp"
-            android:text="Enregistrer"
+            android:text="@string/save_btn"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
     </LinearLayout>

@@ -30,8 +30,10 @@ public class DummyMeetingApiService implements MeetingApiService {
     public List<Meeting> getMeetings() {
         return meetings;
     }
+    @Override
     public List<Room> getRooms() {return rooms;}
-   // public List<Participant> getParticipants {return participants;}
+    @Override
+    public List<Participant> getParticipants() {return participants;}
 
 
     /**

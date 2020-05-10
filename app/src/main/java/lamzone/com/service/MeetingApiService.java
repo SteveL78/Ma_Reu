@@ -3,6 +3,8 @@ package lamzone.com.service;
 import java.util.List;
 
 import lamzone.com.model.Meeting;
+import lamzone.com.model.Participant;
+import lamzone.com.model.Room;
 
 /**
  * Neighbour API client
@@ -16,6 +18,8 @@ public interface MeetingApiService {
      * @return {@link List}
      */
     List<Meeting> getMeetings();   // renvoie meeting
+    List<Room> getRooms();
+    List<Participant> getParticipants();
 
     /**
      * Deletes a meeting

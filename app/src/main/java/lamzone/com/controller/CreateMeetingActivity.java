@@ -4,39 +4,37 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import org.w3c.dom.DOMStringList;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.time.chrono.MinguoDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import lamzone.com.R;
 import lamzone.com.di.DI;
+import lamzone.com.model.Participant;
+import lamzone.com.model.Room;
+import lamzone.com.service.DummyMeetingGenerator;
 import lamzone.com.service.MeetingApiService;
+import lamzone.com.service.ParticipantGenerator;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -56,41 +54,13 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private TextView mRoomTv;
     private Spinner mSpinnerRoom;
 
-    private TextView mParticipantsTv;
-    private Spinner mSpinnerParticipant;
+    private MultiAutoCompleteTextView multiAutoCompleteTextView;
+    private List<ParticipantGenerator> participantGenerators;
 
     private Button mSaveBtn;
 
     private DatePickerDialog mDatePickerDialog;
     private Calendar mCalendar;
-
-
-    /* Spinner to choose meeting room : */
-/*    final ArrayList<String> meetingRooms = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.meeting_rooms_arrays)));
-        meetingRooms.add(0, "Sélectionner une salle");
-    ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, meetingRooms) {
-
-
-            // SPINNER ROOM
-        ArrayAdapter<CharSequence> adapterRoom = ArrayAdapter.createFromResource(this, R.array.meeting_rooms_arrays, android.R.layout.simple_spinner_item);
-        adapterRoom.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        mSpinnerRoom.setAdapter(adapterRoom);
-        mSpinnerRoom.setOnItemSelectedListener(this);
-
-        // SPINNER PARTICIPANT
-        mSpinnerParticipant = (Spinner) findViewById(R.id.spinner_participant);
-        ArrayAdapter<CharSequence> adapterParticipant = ArrayAdapter.createFromResource(this, R.array.meeting_participants_arrays, android.R.layout.simple_spinner_item);
-        adapterParticipant.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        mSpinnerParticipant.setAdapter(adapterParticipant);
-        mSpinnerParticipant.setOnItemSelectedListener(this);
-
-    */
-
-
-
-
-
-
 
 
     @Override
@@ -109,10 +79,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mEndDateBtn = findViewById(R.id.select_end_btn);
         mRoomTv = findViewById(R.id.select_room_textView);
         mSpinnerRoom = findViewById(R.id.spinner_room);
-        mParticipantsTv = findViewById(R.id.select_participant_textView);
-        mSpinnerParticipant = findViewById(R.id.spinner_participant);
         mSaveBtn = findViewById(R.id.save_btn);
 
+        multiAutoCompleteTextView = findViewById(R.id.multiautocompletetextview);
 
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +92,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
 
         mApiService = DI.getMeetingApiService();
+        mApiService.getRooms();
+        mApiService.getParticipants();
 
 
         // ============== DATETIME PICKER =================
@@ -135,54 +106,22 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
 
 
-        mEndDateBtn.setOnClickListener(new View.OnClickListener() {           // DATETIMEPICKER (FIN DE LA REUNION)
+        // ============== TIME PICKER =================
+
+        mEndDateBtn.setOnClickListener(new View.OnClickListener() {     // DEBUT DU TIMEPICKER
             @Override
             public void onClick(View view) {
-                showDateTimeDialog(mEndDateBtn);
+                showTimeDialogEnd(mEndDateBtn);
             }
         });
-
-
-
-
-        /* Spinner to choose meeting room : */
-/*    final ArrayList<String> meetingRooms = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.meeting_rooms_arrays)));
-        meetingRooms.add(0, "Sélectionner une salle");
-    ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, meetingRooms) {
-
-
-            // SPINNER ROOM
-        ArrayAdapter<CharSequence> adapterRoom = ArrayAdapter.createFromResource(this, R.array.meeting_rooms_arrays, android.R.layout.simple_spinner_item);
-        adapterRoom.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        mSpinnerRoom.setAdapter(adapterRoom);
-        mSpinnerRoom.setOnItemSelectedListener(this);
-
-        // SPINNER PARTICIPANT
-        mSpinnerParticipant = (Spinner) findViewById(R.id.spinner_participant);
-        ArrayAdapter<CharSequence> adapterParticipant = ArrayAdapter.createFromResource(this, R.array.meeting_participants_arrays, android.R.layout.simple_spinner_item);
-        adapterParticipant.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        mSpinnerParticipant.setAdapter(adapterParticipant);
-        mSpinnerParticipant.setOnItemSelectedListener(this);
-
-    */
-
 
 
         // ============ SPINNER ROOM ==============
 
         List<String> rooms = new ArrayList<>();
-        rooms.add(0, "Sélectionnez une salle");
-        rooms.add("Mario");
-        rooms.add("Luigi");
-        rooms.add("Peach");
-        rooms.add("Toad");
-        rooms.add("Yoshi");
-        rooms.add("Harmonie");
-        rooms.add("Wario");
-        rooms.add("Géno");
-        rooms.add("Pauline");
-        rooms.add("Fonky Kong");
-
+        for (Room room : mApiService.getRooms()) {
+            rooms.add(room.getName());
+        }
 
         // Style and populate the Spinner
         ArrayAdapter<String> dataAdapterRoom;
@@ -199,13 +138,12 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (adapterView.getItemAtPosition(position).equals("Sélectionnez une salle")) {
                     // do nothing
-                }
-                else {
+                } else {
                     // on selecting a spinner item
                     String item = adapterView.getItemAtPosition(position).toString();
 
                     // show selected spinner item
-                    Toast.makeText(adapterView.getContext(),  "Salle " + item + " sélectionnée", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(adapterView.getContext(), "Salle " + item + " sélectionnée", Toast.LENGTH_SHORT).show();
 
                     // anything else you want to do on item selection do here
                 }
@@ -218,60 +156,67 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
 
 
-
-        // =========== SPINNER PARTICIPANT ================
+        // =========== MULTIAUTOCOMPLETETEXTVIEW PARTICIPANT ================
 
         List<String> participants = new ArrayList<>();
-        rooms.add(0, "Sélectionnez un participant");
-        rooms.add("Charles");
-        rooms.add("Steve");
-        rooms.add("Latif");
-        rooms.add("Jabbar");
-        rooms.add("Sophie");
-        rooms.add("Timothé");
-        rooms.add("Mathias");
-        rooms.add("Cassandra");
+        for (Participant participant : mApiService.getParticipants()) {
+            participants.add(participant.getParticipantName());
+        }
+        ArrayAdapter<String> arrayAdapterParticipant;
+        arrayAdapterParticipant = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, participants);
+        multiAutoCompleteTextView.setAdapter(arrayAdapterParticipant);
+        multiAutoCompleteTextView.setThreshold(1);
+        multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+/*ArrayAdapter<String> adapter = new ArrayAdapter<String>(mApiService.getParticipants());
+multiAutoCompleteTextView.setAdapter(adapter);
+multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());*/
 
 
 
-        // Style and populate the Spinner
-        ArrayAdapter<String> Participant;
-        Participant = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, participants);
 
-        // Dropdown layout Style
-        Participant.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
-        // Attaching data adapter to spinner
-        mSpinnerParticipant.setAdapter(Participant);
 
-        mSpinnerParticipant.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // ============== DATETIME PICKER =================
+
+        mStartDateBtn.setOnClickListener(new View.OnClickListener() {           // DATETIMEPICKER (DEBUT DE LA REUNION)
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if (adapterView.getItemAtPosition(position).equals("Sélectionnez une salle")) {
-                    // do nothing
-                }
-                else {
-                    // on selecting a spinner item
-                    String item = adapterView.getItemAtPosition(position).toString();
-
-                    // show selected spinner item
-                    Toast.makeText(adapterView.getContext(), item + " sélectionnée", Toast.LENGTH_SHORT).show();
-
-                    // anything else you want to do on item selection do here
-                }
+            public void onClick(View view) {
+                showDateTimeDialog(mStartDateBtn);
             }
+        });
 
+
+        // ============== TIME PICKER =================
+
+        mEndDateBtn.setOnClickListener(new View.OnClickListener() {     // DEBUT DU TIMEPICKER
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // TODO Auto-generated method stub
+            public void onClick(View view) {
+                showTimeDialogEnd(mEndDateBtn);
             }
         });
     }
 
 
 
-
-
+    // =========== SUITE DATETIMEPICKER ================
 
     private void showDateTimeDialog(final Button mStartDateBtn) {          // SUITE DATETIMEPICKER (DEBUT DE LA REUNION)
         final Calendar calendarStart = Calendar.getInstance();
@@ -288,7 +233,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                         calendarStart.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendarStart.set(Calendar.MINUTE, minute);
 
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
                         mStartDateBtn.setText(simpleDateFormat.format(calendarStart.getTime()));
                     }
                 };
@@ -301,44 +246,30 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     }        // FIN DATETIMEPICKER (DEBUT DE LA REUNION)
 
 
-    private void showDateTimeDialog2(final Button mEndDateBtn) {          // SUITE DATETIMEPICKER (FIN DE LA REUNION)
-        final Calendar calendar = Calendar.getInstance();
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+
+
+
+    // =========== SUITE TIMEPICKER ================
+
+    private void showTimeDialogEnd(final Button mEndDateBtn) {             // SUITE TIMEPICKER
+        final Calendar calendarEnd = Calendar.getInstance();
+
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        calendar.set(Calendar.MINUTE, minute);
-
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
-                        mEndDateBtn.setText(simpleDateFormat.format(calendar.getTime()));
-                    }
-                };
-
-                new TimePickerDialog(CreateMeetingActivity.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
+            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                calendarEnd.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendarEnd.set(Calendar.MINUTE, minute);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                mEndDateBtn.setText(simpleDateFormat.format(calendarEnd.getTime()));
             }
         };
 
-        new DatePickerDialog(CreateMeetingActivity.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-    }        // FIN DATETIMEPICKER (FIN DE LA REUNION)
+        new TimePickerDialog(CreateMeetingActivity.this, timeSetListener, calendarEnd.get(Calendar.HOUR_OF_DAY), calendarEnd.get(Calendar.MINUTE), true).show();
+    }       // FIN TIMEPICKER
 
 
-
-
-
-
-
-
-
-
-
-        // On désactive le bouton enregistrer tant que le
+    // On désactive le bouton enregistrer tant que le
 /*        mSaveBtn.setEnabled(false);
         mMeetingSubjectTv.addTextChangedListener(new TextWatcher() {
             @Override
@@ -356,7 +287,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
             }
         });*/
-
 
 
     @Override
@@ -381,6 +311,22 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     }
     // ======== End Toast Spinner Room end ===========
+
+
+
+
+
+public void showInput (View view) {
+        String input = multiAutoCompleteTextView.getText().toString();
+        Toast.makeText(this,input, Toast.LENGTH_SHORT).show();
+
+}
+
+
+
+
+
+
 }
 
 

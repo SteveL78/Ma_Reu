@@ -3,7 +3,15 @@
 
     <string name="select_item">Trier</string>
     <string name="filter_item">Filtrer</string>
-
-
+    <string name="create_meeting_title">Créez votre réunion</string>
+    <string name="choose_topic_hint">Indiquez le thème de la réunion</string>
+    <string name="tv_start_meeting">Elle débute quand ?</string>
+    <string name="start_btn">Cliquer ici</string>
+    <string name="tv_end_meeting">Elle se termine quand ?</string>
+    <string name="end_btn">Cliquer ici</string>
+    <string name="tv_select_room">Dans quelle salle ?</string>
+    <string name="select_participants_tv">Avec qui ?</string>
+    <string name="tv_select_participant">Tapez les prénoms des participants</string>
+    <string name="save_btn">Enregistrer</string>
 
 </resources>

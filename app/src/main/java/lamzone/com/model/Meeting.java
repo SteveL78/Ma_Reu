@@ -15,7 +15,7 @@ public class Meeting implements Serializable {
      * Tout ce qui définit une Réunion
      */
     private int id;             // position dans la liste
-    private String object;      // objet de la réunion (=réunion A, réunion B, réunion C ...)
+    private String topic;      // thème de la réunion (=réunion A, réunion B, réunion C ...)
     private String startTime;   // heure de début de la réunion //TODO put Date
     private String endTime;     // heure de fin de la réunion   //TODO put Date
     private String startDate;   // date de début de la réunion //TODO remove
@@ -31,9 +31,9 @@ public class Meeting implements Serializable {
      * @param object
      * @param room
      */
-    public Meeting(int id, String object, String startTime, String endTime, String startDate, Room room, List<Participant> participants) {
+    public Meeting (int id, String object, String startTime, String endTime, String startDate, Room room, List<Participant> participants) {
         this.id = id;
-        this.object = object;
+        this.topic = object;
         this.startTime = startTime;
         this.endTime = endTime;
         this.startDate = startDate;
@@ -43,16 +43,20 @@ public class Meeting implements Serializable {
 
     }
 
+    public int getId() { return id;}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id;}
 
-    public String getObject() {
-        return object;
-    }
 
-    public void setStartTime(String startTime) {
+
+    public String getTopic() { return topic;}
+
+    public void setTopic(String topic) { this.topic = topic;}
+
+
+
+
+    public void setStartTime (String startTime) {
         this.startTime = startTime;
     }
 
