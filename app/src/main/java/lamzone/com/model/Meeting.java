@@ -1,6 +1,7 @@
 package lamzone.com.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,9 +17,8 @@ public class Meeting implements Serializable {
      */
     private int id;             // position dans la liste
     private String topic;      // thème de la réunion (=réunion A, réunion B, réunion C ...)
-    private String startTime;   // heure de début de la réunion //TODO put Date
-    private String endTime;     // heure de fin de la réunion   //TODO put Date
-    private String startDate;   // date de début de la réunion //TODO remove
+    private Date startTime;   // heure de début de la réunion //TODO put Date
+    private Date endTime;     // heure de fin de la réunion   //TODO put Date
 
     private Room room;          // n° de la salle
     private List<Participant> participants; // email des particpants
@@ -31,12 +31,11 @@ public class Meeting implements Serializable {
      * @param object
      * @param room
      */
-    public Meeting (int id, String object, String startTime, String endTime, String startDate, Room room, List<Participant> participants) {
+    public Meeting (int id, String object, Date startTime, Date endTime, Room room, List<Participant> participants) {
         this.id = id;
         this.topic = object;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.startDate = startDate;
 
         this.room = room;
         this.participants = participants;
@@ -56,17 +55,14 @@ public class Meeting implements Serializable {
 
 
 
-    public void setStartTime (String startTime) {
+    public void setStartTime (Date startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
 
     public Room getRoom() {
         return room;
@@ -80,7 +76,7 @@ public class Meeting implements Serializable {
         this.participants = participants;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 

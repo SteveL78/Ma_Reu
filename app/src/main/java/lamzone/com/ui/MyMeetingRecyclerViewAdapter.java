@@ -61,7 +61,7 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Meeting meeting = mMeetings.get(position);            // Dans la liste des réunions on récupère une réunion à la position qui est donnée
         holder.mMeetingObject.setText(meeting.getTopic());     // on affiche l'objet de la réunion
-        holder.mBeginHour.setText(meeting.getStartTime());         // On affiche l'heure de début de la réunion
+       // holder.mBeginHour.setText(meeting.getStartTime());         // On affiche l'heure de début de la réunion TODO
         holder.mRoomName.setText(meeting.getRoom().getName());          // on affiche le nom de la salle de réunion
         holder.mColorRoom.setImageResource(meeting.getRoom().getColorRoom());
 

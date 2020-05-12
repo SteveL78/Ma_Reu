@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.database.DatabaseErrorHandler;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import org.w3c.dom.DOMStringList;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -168,29 +170,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         multiAutoCompleteTextView.setThreshold(1);
         multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
-/*ArrayAdapter<String> adapter = new ArrayAdapter<String>(mApiService.getParticipants());
-multiAutoCompleteTextView.setAdapter(adapter);
-multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -242,9 +221,11 @@ multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokeni
             }
         };
 
-        new DatePickerDialog(CreateMeetingActivity.this, dateSetListener, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH)).show();
+        DatePickerDialog dp = new DatePickerDialog(CreateMeetingActivity.this, dateSetListener, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH));
+        Date date = new Date();
+        dp.getDatePicker().setMinDate(date.getTime());
+        dp.show();
     }        // FIN DATETIMEPICKER (DEBUT DE LA REUNION)
-
 
 
 
@@ -311,19 +292,6 @@ multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokeni
 
     }
     // ======== End Toast Spinner Room end ===========
-
-
-
-
-
-public void showInput (View view) {
-        String input = multiAutoCompleteTextView.getText().toString();
-        Toast.makeText(this,input, Toast.LENGTH_SHORT).show();
-
-}
-
-
-
 
 
 
