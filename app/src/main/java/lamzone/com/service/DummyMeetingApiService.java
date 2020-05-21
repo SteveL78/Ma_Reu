@@ -44,23 +44,14 @@ public class DummyMeetingApiService implements MeetingApiService {
         meetings.remove(meeting);                               // supprime un meeting
     }
 
-    // Mets à jour le meeting
-    public void updateMeeting(Meeting meeting) {
-        for (int i = 0; i < meetings.size(); i++) {           // On fait le tour de la liste
-            Meeting neighbourTemp = meetings.get(i);    // On fait défiler la liste tant qu'on obtient pas la réunion attendue
-            if (meeting.equals(neighbourTemp) ){          // si la réunion correspond à celui attendu alors on l'affiche
-                meetings.set(i, meeting);
-                break;
-            }
-        }
-    }
-/*
+
+
+
     @Override
     public void addMeeting (Meeting meeting) {
         meetings.add(meeting);
-        updateMeeting(meeting);
-        ;}    // Ajouter un meeting
-*/
+        }    // Ajouter un meeting
+
 
 
 }

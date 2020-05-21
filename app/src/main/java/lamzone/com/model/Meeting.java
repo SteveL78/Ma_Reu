@@ -17,8 +17,8 @@ public class Meeting implements Serializable {
      */
     private int id;             // position dans la liste
     private String topic;      // thème de la réunion (=réunion A, réunion B, réunion C ...)
-    private Date startTime;   // heure de début de la réunion //TODO put Date
-    private Date endTime;     // heure de fin de la réunion   //TODO put Date
+    private Date startTime;   // heure de début de la réunion
+    private Date endTime;     // heure de fin de la réunion
 
     private Room room;          // n° de la salle
     private List<Participant> participants; // email des particpants
@@ -55,6 +55,17 @@ public class Meeting implements Serializable {
 
 
 
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setDate(Date startTime) {
+        this.startTime = startTime;
+    }
+
+
+
+
     public void setStartTime (Date startTime) {
         this.startTime = startTime;
     }
@@ -76,9 +87,7 @@ public class Meeting implements Serializable {
         this.participants = participants;
     }
 
-    public Date getStartTime() {
-        return startTime;
-    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -15,14 +15,14 @@ public class ParticipantGenerator {
 
     //Création de la liste des salles avec les informations devant s'afficher pour chacune
     public static List<Participant> DUMMY_PARTICIPANTS = Arrays.asList(
-            new Participant(1, "Charles", "charles@lamzone.com"),
-            new Participant(2, "Steve", "steve@lamzone.com"),
-            new Participant(3, "Latif", "latif@lamzone.com"),
-            new Participant(4, "Jabbar", "jabbar@lamzone.com"),
-            new Participant(5, "Sophie", "sophie@lamzone.com"),
-            new Participant(6, "Timothé", "timothe@lamzone.com"),
-            new Participant(7, "Mathias", "mathias@lamzone.com"),
-            new Participant(8, "Cassandra", "cassandra@lamzone.com")
+            new Participant(41, "Charles", "charles@lamzone.com"),
+            new Participant(213, "Steve", "steve@lamzone.com"),
+            new Participant(33, "Latif", "latif@lamzone.com"),
+            new Participant(489, "Jabbar", "jabbar@lamzone.com"),
+            new Participant(529, "Sophie", "sophie@lamzone.com"),
+            new Participant(68, "Timothé", "timothe@lamzone.com"),
+            new Participant(715, "Mathias", "mathias@lamzone.com"),
+            new Participant(186, "Cassandra", "cassandra@lamzone.com")
     );
 
 

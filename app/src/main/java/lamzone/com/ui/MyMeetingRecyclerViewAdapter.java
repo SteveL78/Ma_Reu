@@ -1,5 +1,7 @@
 package lamzone.com.ui;
 
+import android.icu.text.UFormat;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,13 +57,16 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         return new ViewHolder(view);
     }
 
+
     /* OnBindViewHolder est une méthode appelée pour chacune des lignes visibles dans notre RecyclerView
      * On y met à jour leur apparence (to bind = lier)*/
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Meeting meeting = mMeetings.get(position);            // Dans la liste des réunions on récupère une réunion à la position qui est donnée
-        holder.mMeetingObject.setText(meeting.getTopic());     // on affiche l'objet de la réunion
-       // holder.mBeginHour.setText(meeting.getStartTime());         // On affiche l'heure de début de la réunion TODO
+        String dateLabel = DateFormat.format("- hh:mm -", meeting.getStartTime()).toString();
+        dateLabel = dateLabel.replace(':', 'h');
+        holder.mMeetingObject.setText(meeting.getTopic());     // on affiche l'objet (le topic) de la réunion
+        holder.mBeginHour.setText(dateLabel);         // On affiche l'heure de début de la réunion TODO
         holder.mRoomName.setText(meeting.getRoom().getName());          // on affiche le nom de la salle de réunion
         holder.mColorRoom.setImageResource(meeting.getRoom().getColorRoom());
 
@@ -120,4 +125,6 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
             ButterKnife.bind(this, itemView);
         }
     }
+
+
 }

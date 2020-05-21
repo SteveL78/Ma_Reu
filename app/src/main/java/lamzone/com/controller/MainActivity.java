@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+
+
     // On s'enregistre auprès d'eventBus pour recevoir un évènement (onStart et onStop car cycle de vie de l'activité ou du fragment)
     @Override
     public void onStart() {
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
+
 
 
     //    Menus de la Toolbar
@@ -134,4 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 }

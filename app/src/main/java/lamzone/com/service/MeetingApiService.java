@@ -31,7 +31,7 @@ public interface MeetingApiService {
     /**
      * Add meeting
      */
-    //void addMeeting(Meeting meeting);     // ajoute un meeting
+    void addMeeting(Meeting meeting);     // ajoute un meeting
 
 
 

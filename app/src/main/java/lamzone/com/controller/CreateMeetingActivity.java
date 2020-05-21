@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.DatabaseErrorHandler;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -88,9 +89,10 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                onCreateMeetingClicked();
             }
         });
+
 
 
         mApiService = DI.getMeetingApiService();
@@ -268,7 +270,13 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
             }
         });*/
+    private void onCreateMeetingClicked () {
+        // TODO vérifier la validité des champs + verifier que le topic n'est pas vide +
+        // TODO que les dates sont bien sélectionnées, que la salle est sélectionnée et 1 utilisateur
+        // TODO vérifier la disponibilité de la salle
 
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -292,6 +300,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     }
     // ======== End Toast Spinner Room end ===========
+
 
 
 
