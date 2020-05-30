@@ -19,6 +19,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import lamzone.com.R;
 import lamzone.com.di.DI;
+import lamzone.com.events.DeleteMeetingEvent;
 import lamzone.com.events.OpenMeetingEvent;
 import lamzone.com.service.MeetingApiService;
 import lamzone.com.ui.MyMeetingRecyclerViewAdapter;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         mApiService = DI.getMeetingApiService();
         adapter = new MyMeetingRecyclerViewAdapter(mApiService.getMeetings());
@@ -54,9 +56,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
+
 
     /**
      * Fired if the user clicks on meeting
@@ -64,35 +65,30 @@ public class MainActivity extends AppCompatActivity {
      * @param event
      */
     @Subscribe
-    public void openMeeting (OpenMeetingEvent event) {
-        // On ouvre une nouvelle activité (=Main2Activity) quand on clique sur un meeting de la liste
+    public void openMeeting(OpenMeetingEvent event) {
+        // On ouvre une nouvelle activité (=CreateMeetingActivity) quand on clique sur un meeting de la liste
         Intent intent = new Intent(this, CreateMeetingActivity.class);
-        intent.putExtra("meeting", event.mMeeting);
+        intent.putExtra("meeting", event.meeting);
         startActivity(intent);
     }
 
 
+    /**
+     * Fired if the user clicks on delete button
+     */
 
-
-    // On s'enregistre auprès d'eventBus pour recevoir un évènement (onStart et onStop car cycle de vie de l'activité ou du fragment)
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
+    @Subscribe
+    public void deleteMeeting(DeleteMeetingEvent deleteMeetingEvent) {
+        mApiService.deleteMeeting(deleteMeetingEvent.getMeeting());
+        adapter.notifyDataSetChanged();
     }
 
 
-
-    //    Menus de la Toolbar
+    // ==================== TOOLBAR ====================
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.filter_icon);
         return true;
     }
 
@@ -111,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Menu Trier par salle sélectionné", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.select_by_ascending_date:
-                Toast.makeText(this, "Menu Trier par ordre croissant sélectionné", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Menu Trier par date croissant sélectionné", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.select_by_increasing_date:
-                Toast.makeText(this, "Menu Trier par ordre décroissant sélectionné", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Menu Trier par date décroissant sélectionné", Toast.LENGTH_LONG).show();
                 return true;
 
 
@@ -135,8 +131,20 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    } // ==================== FIN DE LA TOOLBAR ====================
 
 
+    // On s'enregistre auprès d'eventBus pour recevoir un évènement (onStart et onStop car cycle de vie de l'activité ou du fragment)
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
 

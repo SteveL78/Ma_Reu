@@ -23,5 +23,7 @@ public class DeleteMeetingEvent {
     }
 
     public Meeting getMeeting() { return meeting; }
+
+
 }
 

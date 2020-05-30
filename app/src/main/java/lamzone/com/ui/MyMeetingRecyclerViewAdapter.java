@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -37,9 +39,8 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
     private List<Participant> mParticipants;
 
 
-
     // CONSTRUCTOR
-    public MyMeetingRecyclerViewAdapter(List<Meeting> items){
+    public MyMeetingRecyclerViewAdapter(List<Meeting> items) {
         mMeetings = items;
     }
 
@@ -63,19 +64,24 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Meeting meeting = mMeetings.get(position);            // Dans la liste des réunions on récupère une réunion à la position qui est donnée
-        String dateLabel = DateFormat.format("- hh:mm -", meeting.getStartTime()).toString();
+        String dateLabel = DateFormat.format(" - hh:mm - ", meeting.getStartTime()).toString();
         dateLabel = dateLabel.replace(':', 'h');
         holder.mMeetingObject.setText(meeting.getTopic());     // on affiche l'objet (le topic) de la réunion
-        holder.mBeginHour.setText(dateLabel);         // On affiche l'heure de début de la réunion TODO
+        holder.mBeginHour.setText(dateLabel);         // On affiche l'heure de début de la réunion
         holder.mRoomName.setText(meeting.getRoom().getName());          // on affiche le nom de la salle de réunion
         holder.mColorRoom.setImageResource(meeting.getRoom().getColorRoom());
 
 
-        // Quand on clique sur le bouton delete on diffuse un évènement précisant la suppression
+
+
+        /* ======================= BOUTON DELETE =======================
+         * Quand on clique sur le bouton delete on diffuse un évènement précisant la suppression
+         */
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting)); // EventBus est comme un bus dans lequel on peut mettre plein de choses avec d'un côté les lecteurs et les receveurs qui seront notifiés, s'ils s'y inscrivent, en cas de modification (ajout ou suppression)
+                Toast.makeText(holder.mDeleteButton.getContext(), "Réunion supprimée", Toast.LENGTH_SHORT).show();
+                EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
 
             }
         });
@@ -85,12 +91,12 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
             @Override
             public void onClick(View view) {
                 //Toast.makeText(holder.mDeleteButton.getContext(), "click", Toast.LENGTH_SHORT).show();
-                EventBus.getDefault().post(new OpenMeetingEvent(meeting)); // ouvre le voisin
+                EventBus.getDefault().post(new OpenMeetingEvent(meeting)); // ouvre le meeting
             }
         });
     }
 
-
+    // ============= RECYCLERVIEW : ON R2CUPERE LE NOMBRE D'ELEMENTS =============
     @Override
     public int getItemCount() {
         return mMeetings.size();
@@ -99,19 +105,19 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
 
     // On relie les informations à afficher
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_list_color )    // couleur de la salle
+        @BindView(R.id.item_list_color)    // couleur de la salle
         public ImageView mColorRoom;
 
-        @BindView(R.id.item_list_object )   // l'objet de la réunion (Réunion A, B, ...)
+        @BindView(R.id.item_list_object)   // l'objet de la réunion (Réunion A, B, ...)
         public TextView mMeetingObject;
 
-        @BindView(R.id.item_list_hour )     // l'heure de la réunion
+        @BindView(R.id.item_list_hour)     // l'heure de la réunion
         public TextView mBeginHour;
 
-        @BindView(R.id.item_list_room_name )    // le nom de la salle
+        @BindView(R.id.item_list_room_name)    // le nom de la salle
         public TextView mRoomName;
 
-        @BindView(R.id.item_list_delete_button )     // le bouton delete
+        @BindView(R.id.item_list_delete_button)     // le bouton delete
         public ImageButton mDeleteButton;
 
         @BindView(R.id.email)     // l'eMail du participant'

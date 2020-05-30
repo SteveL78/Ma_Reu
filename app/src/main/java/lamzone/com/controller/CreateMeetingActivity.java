@@ -3,11 +3,15 @@ package lamzone.com.controller;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.DatabaseErrorHandler;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +26,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.w3c.dom.DOMStringList;
 
 import java.text.SimpleDateFormat;
@@ -33,11 +40,13 @@ import java.util.Locale;
 
 import lamzone.com.R;
 import lamzone.com.di.DI;
+import lamzone.com.model.Meeting;
 import lamzone.com.model.Participant;
 import lamzone.com.model.Room;
 import lamzone.com.service.DummyMeetingGenerator;
 import lamzone.com.service.MeetingApiService;
 import lamzone.com.service.ParticipantGenerator;
+import lamzone.com.ui.MyMeetingRecyclerViewAdapter;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -71,10 +80,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+/*        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
 
-        mWelcomeMsg = findViewById(R.id.activity_main2_welcome_msg);
         mMeetingSubjectTv = findViewById(R.id.meeting_subject_editText);
         mStartTv = findViewById(R.id.start_textView);
         mStartDateBtn = findViewById(R.id.select_date_btn);
@@ -92,7 +100,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                 onCreateMeetingClicked();
             }
         });
-
 
 
         mApiService = DI.getMeetingApiService();
@@ -173,8 +180,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
 
-
-
         // ============== DATETIME PICKER =================
 
         mStartDateBtn.setOnClickListener(new View.OnClickListener() {           // DATETIMEPICKER (DEBUT DE LA REUNION)
@@ -194,7 +199,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         });
     }
-
 
 
     // =========== SUITE DATETIMEPICKER ================
@@ -228,9 +232,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         dp.getDatePicker().setMinDate(date.getTime());
         dp.show();
     }        // FIN DATETIMEPICKER (DEBUT DE LA REUNION)
-
-
-
 
 
     // =========== SUITE TIMEPICKER ================
@@ -270,10 +271,51 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
             }
         });*/
-    private void onCreateMeetingClicked () {
+
+
+
+    // ============= VERIFICATION DES CHAMPS LORS DE L'ENREGISTREMENT  =============
+
+
+    private void onCreateMeetingClicked() {
+
         // TODO vérifier la validité des champs + verifier que le topic n'est pas vide +
         // TODO que les dates sont bien sélectionnées, que la salle est sélectionnée et 1 utilisateur
+
+        // On vérifie que le Topic n'est pas vide
+        String meetingSubject = mMeetingSubjectTv.getText().toString();
+        if (TextUtils.isEmpty(meetingSubject)) {
+            mMeetingSubjectTv.setError("Veuillez SVP préciser l'objet de la réunion");
+            return;
+        }
+
+
+        // On vérifie que la date de début n'est pas vide
+        String startDate = mStartDateBtn.getText().toString();
+        if (TextUtils.isEmpty(startDate)) {
+            mStartDateBtn.setError("Veuillez SVP préciser une date de début");
+            return;
+        }
+
+        // On vérifie que la date de fin n'est pas vide
+        String endDate = mEndDateBtn.getText().toString();
+        if (TextUtils.isEmpty(endDate)) {
+            mEndDateBtn.setError("Veuillez SVP préciser une date de fin");
+            return;
+        }
+
+        // On vérifie que la date de fin n'est pas vide
+        String multiParticipants = multiAutoCompleteTextView.getText().toString();
+        if (TextUtils.isEmpty(multiParticipants)) {
+            multiAutoCompleteTextView.setError("Veuillez SVP renseigner au moins un participant");
+            return;
+        }
+
+
         // TODO vérifier la disponibilité de la salle
+
+
+
 
 
     }
@@ -300,8 +342,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     }
     // ======== End Toast Spinner Room end ===========
-
-
 
 
 }
