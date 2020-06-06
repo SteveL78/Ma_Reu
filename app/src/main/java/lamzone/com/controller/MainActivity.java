@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // ==================== TOOLBAR ====================
+    // ==================== FILTRE TOOLBAR ====================
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-    } // ==================== FIN DE LA TOOLBAR ====================
+    } // ==================== FIN FILTRE DE LA TOOLBAR ====================
 
 
     // On s'enregistre auprès d'eventBus pour recevoir un évènement (onStart et onStop car cycle de vie de l'activité ou du fragment)

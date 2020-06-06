@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DatabaseErrorHandler;
 import android.os.Bundle;
@@ -50,7 +52,7 @@ import lamzone.com.ui.MyMeetingRecyclerViewAdapter;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-
+    private CreateMeetingActivity activity;
     private MeetingApiService mApiService = DI.getMeetingApiService();
 
     private TextView mWelcomeMsg;
@@ -73,6 +75,12 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     private DatePickerDialog mDatePickerDialog;
     private Calendar mCalendar;
+
+    private Calendar calendarStart = null;
+
+    private Calendar calendarEnd = null;
+
+    private Room room = null;
 
 
     @Override
@@ -101,7 +109,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-
+        this.activity = this;
         mApiService = DI.getMeetingApiService();
         mApiService.getRooms();
         mApiService.getParticipants();
@@ -130,6 +138,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         // ============ SPINNER ROOM ==============
 
         List<String> rooms = new ArrayList<>();
+        rooms.add(0, "Cliquer ici");
         for (Room room : mApiService.getRooms()) {
             rooms.add(room.getName());
         }
@@ -147,16 +156,12 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mSpinnerRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if (adapterView.getItemAtPosition(position).equals("Sélectionnez une salle")) {
+                if (adapterView.getItemAtPosition(position).equals("Cliquer ici")) {
                     // do nothing
+
                 } else {
-                    // on selecting a spinner item
-                    String item = adapterView.getItemAtPosition(position).toString();
+                    room = mApiService.getRooms().get(position);
 
-                    // show selected spinner item
-                    Toast.makeText(adapterView.getContext(), "Salle " + item + " sélectionnée", Toast.LENGTH_SHORT).show();
-
-                    // anything else you want to do on item selection do here
                 }
             }
 
@@ -204,10 +209,10 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     // =========== SUITE DATETIMEPICKER ================
 
     private void showDateTimeDialog(final Button mStartDateBtn) {          // SUITE DATETIMEPICKER (DEBUT DE LA REUNION)
-        final Calendar calendarStart = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                calendarStart = Calendar.getInstance();
                 calendarStart.set(Calendar.YEAR, year);
                 calendarStart.set(Calendar.MONTH, month);
                 calendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -219,7 +224,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                         calendarStart.set(Calendar.MINUTE, minute);
 
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
-                        mStartDateBtn.setText(simpleDateFormat.format(calendarStart.getTime()));
+                        mStartDateBtn.setText(simpleDateFormat.format(calendarStart.getTimeInMillis()));
                     }
                 };
 
@@ -227,7 +232,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         };
 
-        DatePickerDialog dp = new DatePickerDialog(CreateMeetingActivity.this, dateSetListener, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH));
+        final  Calendar calendar = Calendar.getInstance();
+        DatePickerDialog dp = new DatePickerDialog(CreateMeetingActivity.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         Date date = new Date();
         dp.getDatePicker().setMinDate(date.getTime());
         dp.show();
@@ -237,19 +243,24 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     // =========== SUITE TIMEPICKER ================
 
     private void showTimeDialogEnd(final Button mEndDateBtn) {             // SUITE TIMEPICKER
-        final Calendar calendarEnd = Calendar.getInstance();
 
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                calendarEnd = Calendar.getInstance();
                 calendarEnd.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendarEnd.set(Calendar.MINUTE, minute);
+                calendarEnd.set(Calendar.DAY_OF_MONTH, calendarStart.get(Calendar.DAY_OF_MONTH));
+                calendarEnd.set(Calendar.MONTH, calendarStart.get(Calendar.MONTH));
+                calendarEnd.set(Calendar.YEAR, calendarStart.get(Calendar.YEAR));
+
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-                mEndDateBtn.setText(simpleDateFormat.format(calendarEnd.getTime()));
+                mEndDateBtn.setText(simpleDateFormat.format(calendarEnd.getTimeInMillis()));
             }
         };
 
-        new TimePickerDialog(CreateMeetingActivity.this, timeSetListener, calendarEnd.get(Calendar.HOUR_OF_DAY), calendarEnd.get(Calendar.MINUTE), true).show();
+        final  Calendar calendar = Calendar.getInstance();
+        new TimePickerDialog(CreateMeetingActivity.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
     }       // FIN TIMEPICKER
 
 
@@ -279,41 +290,63 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     private void onCreateMeetingClicked() {
 
-        // TODO vérifier la validité des champs + verifier que le topic n'est pas vide +
-        // TODO que les dates sont bien sélectionnées, que la salle est sélectionnée et 1 utilisateur
-
-        // On vérifie que le Topic n'est pas vide
+        // TODO vérifier la validité des champs + verifier que le topic n'est pas vide
         String meetingSubject = mMeetingSubjectTv.getText().toString();
-        if (TextUtils.isEmpty(meetingSubject)) {
-            mMeetingSubjectTv.setError("Veuillez SVP préciser l'objet de la réunion");
-            return;
-        }
-
-
-        // On vérifie que la date de début n'est pas vide
-        String startDate = mStartDateBtn.getText().toString();
-        if (TextUtils.isEmpty(startDate)) {
-            mStartDateBtn.setError("Veuillez SVP préciser une date de début");
-            return;
-        }
-
-        // On vérifie que la date de fin n'est pas vide
-        String endDate = mEndDateBtn.getText().toString();
-        if (TextUtils.isEmpty(endDate)) {
-            mEndDateBtn.setError("Veuillez SVP préciser une date de fin");
-            return;
-        }
-
-        // On vérifie que la date de fin n'est pas vide
         String multiParticipants = multiAutoCompleteTextView.getText().toString();
-        if (TextUtils.isEmpty(multiParticipants)) {
-            multiAutoCompleteTextView.setError("Veuillez SVP renseigner au moins un participant");
+
+        if (meetingSubject.isEmpty()){
+            // TODO : mettre une popup
             return;
+        }
+
+
+
+        if (calendarStart == null) {
+            AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
+            myPopUp.setTitle("Attention");
+            myPopUp.setMessage("Veillez à bien mettre une date et une heure de début");
+            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
+                }
+            });
+            myPopUp.create().show();
+
+            return;
+
+        }
+
+        if (calendarEnd == null) {
+            // TODO mettre popup date end pas initialisé
+            return;
+
+        }
+
+        Date startDate = calendarStart.getTime();
+        Date endDate = calendarEnd.getTime();
+
+
+        // On vérifie que la date de fin n'est pas antérieure à la date de début
+        if (startDate.after(endDate)) {
+            // TODO mettre popup
+            return;
+        }
+
+        if (room == null){
+            // TODO : mettre popup
+            return;
+        }
+
+        String [] participants = multiAutoCompleteTextView.getText().toString().split(",");
+        if (participants.length == 0){
+            // TODO : mettre popup
+            return;
+
         }
 
 
         // TODO vérifier la disponibilité de la salle
-
 
 
 
