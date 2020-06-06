@@ -4,7 +4,7 @@
     <string name="select_item">Trier</string>
     <string name="filter_item">Filtrer</string>
     <string name="create_meeting_title">Créez votre réunion</string>
-    <string name="choose_topic_hint">Indiquez le thème de la réunion</string>
+    <string name="choose_subject_hint">Indiquez le sujet de la réunion</string>
     <string name="tv_start_meeting">Elle débute quand ?</string>
     <string name="start_btn">Cliquer ici</string>
     <string name="tv_end_meeting">Elle se termine quand ?</string>

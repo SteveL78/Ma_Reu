@@ -21,7 +21,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="20dp"
-            android:hint="@string/choose_topic_hint"
+            android:hint="@string/choose_subject_hint"
             android:textSize="18sp"
             android:inputType="text"/>
 

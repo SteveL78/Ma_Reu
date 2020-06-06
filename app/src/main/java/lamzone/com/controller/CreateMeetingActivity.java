@@ -287,24 +287,17 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     // ============= VERIFICATION DES CHAMPS LORS DE L'ENREGISTREMENT  =============
 
-
     private void onCreateMeetingClicked() {
 
-        // TODO vérifier la validité des champs + verifier que le topic n'est pas vide
         String meetingSubject = mMeetingSubjectTv.getText().toString();
         String multiParticipants = multiAutoCompleteTextView.getText().toString();
 
-        if (meetingSubject.isEmpty()){
-            // TODO : mettre une popup
-            return;
-        }
 
-
-
-        if (calendarStart == null) {
+        // On vérifie que l'utilisateur a bien indiqué un sujet de réunion
+        if (meetingSubject.isEmpty()) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
-            myPopUp.setTitle("Attention");
-            myPopUp.setMessage("Veillez à bien mettre une date et une heure de début");
+            myPopUp.setTitle("ATTENTION");
+            myPopUp.setMessage("Merci d'indiquer le sujet de la réunion.");
             myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -312,15 +305,39 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                 }
             });
             myPopUp.create().show();
-
             return;
-
         }
 
-        if (calendarEnd == null) {
-            // TODO mettre popup date end pas initialisé
-            return;
 
+        // On vérifie que l'utilisateur a bien indiqué une date et une de début de réunion
+        if (calendarStart == null) {
+            AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
+            myPopUp.setTitle("ATTENTION");
+            myPopUp.setMessage("Veillez à bien indiquer une date et une heure de début");
+            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
+                }
+            });
+            myPopUp.create().show();
+            return;
+        }
+
+
+        // On vérifie que l'utilisateur a bien indiqué une heure de fin de réunion
+        if (calendarEnd == null) {
+            AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
+            myPopUp.setTitle("ATTENTION");
+            myPopUp.setMessage("Merci de préciser l'heure de fin de la réunion");
+            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
+                }
+            });
+            myPopUp.create().show();
+            return;
         }
 
         Date startDate = calendarStart.getTime();
@@ -330,19 +347,51 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         // On vérifie que la date de fin n'est pas antérieure à la date de début
         if (startDate.after(endDate)) {
             // TODO mettre popup
+            AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
+            myPopUp.setTitle("ATTENTION");
+            myPopUp.setMessage("Merci de préciser l'heure de fin de la réunion");
+            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
+                }
+            });
+            myPopUp.create().show();
             return;
         }
 
-        if (room == null){
-            // TODO : mettre popup
+
+        // On vérifie que l'utilisateur a bien sélectionné une salle de réunion
+        if (room == null) {
+            AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
+            myPopUp.setTitle("ATTENTION");
+            myPopUp.setMessage("Vous devez sélectionner une salle de réunion");
+            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
+                }
+            });
+            myPopUp.create().show();
             return;
         }
 
+
+        // On vérifie qu'au moins 1 participant est indiqué
         String [] participants = multiAutoCompleteTextView.getText().toString().split(",");
-        if (participants.length == 0){
+        if (participants.length == 0) {
             // TODO : mettre popup
+            AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
+            myPopUp.setTitle("ATTENTION");
+            myPopUp.setMessage("Vous devez sélectionner une salle de réunion");
+            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
+                }
+            });
+            myPopUp.create().show();
             return;
-
         }
 
 
