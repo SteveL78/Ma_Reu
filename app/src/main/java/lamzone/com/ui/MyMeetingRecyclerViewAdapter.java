@@ -1,6 +1,5 @@
 package lamzone.com.ui;
 
-import android.icu.text.UFormat;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -66,9 +64,9 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         Meeting meeting = mMeetings.get(position);            // Dans la liste des réunions on récupère une réunion à la position qui est donnée
         String dateLabel = DateFormat.format(" - hh:mm - ", meeting.getStartTime()).toString();
         dateLabel = dateLabel.replace(':', 'h');
-        holder.mMeetingObject.setText(meeting.getTopic());     // on affiche l'objet (le topic) de la réunion
+        holder.mMeetingObject.setText(meeting.getSubject());     // on affiche l'objet (le topic) de la réunion
         holder.mBeginHour.setText(dateLabel);         // On affiche l'heure de début de la réunion
-        holder.mRoomName.setText(meeting.getRoom().getName());          // on affiche le nom de la salle de réunion
+        holder.mRoomName.setText(meeting.getRoom().getNameRoom());          // on affiche le nom de la salle de réunion
         holder.mColorRoom.setImageResource(meeting.getRoom().getColorRoom());
 
 

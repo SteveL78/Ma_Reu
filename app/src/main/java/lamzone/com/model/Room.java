@@ -27,7 +27,7 @@ public class Room implements Serializable {
         return id;
     }
 
-    public String getName() {
+    public String getNameRoom() {
         return nameRoom;
     }
 

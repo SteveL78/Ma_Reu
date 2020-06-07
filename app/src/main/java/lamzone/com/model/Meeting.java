@@ -15,8 +15,8 @@ public class Meeting implements Serializable {
      * Identifier
      * Tout ce qui définit une Réunion
      */
-    private int id;             // position dans la liste
-    private String topic;      // thème de la réunion (=réunion A, réunion B, réunion C ...)
+    private long id;             // position dans la liste
+    private String subject;      // sujet de la réunion (=réunion A, réunion B, réunion C ...)
     private Date startTime;   // heure de début de la réunion
     private Date endTime;     // heure de fin de la réunion
 
@@ -28,63 +28,47 @@ public class Meeting implements Serializable {
      * Constructor
      *
      * @param id
-     * @param object
+     * @param subject
      * @param room
      */
-    public Meeting (int id, String object, Date startTime, Date endTime, Room room, List<Participant> participants) {
+    public Meeting (long id, String subject, Date startTime, Date endTime, Room room, List<Participant> participants) {
         this.id = id;
-        this.topic = object;
+        this.subject = subject;
         this.startTime = startTime;
         this.endTime = endTime;
 
         this.room = room;
         this.participants = participants;
-
     }
 
-    public int getId() { return id;}
 
-    public void setId(int id) { this.id = id;}
+    public long getId() { return id; }
 
-
-
-    public String getTopic() { return topic;}
-
-    public void setTopic(String topic) { this.topic = topic;}
+    public void setId(long id) { this.id = id; }
 
 
 
+    public String getSubject() { return subject; }
+    public void setSubject (String subject) { this.subject = subject; }
 
-    public Date getStartTime() {
-        return startTime;
-    }
 
-    public void setDate(Date startTime) {
+    public Date getStartTime() { return startTime; }
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
 
-
-
-    public void setStartTime (Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
+    public Date getEndTime() { return startTime; }
+    public void setEndTime(Date endTime) { this.endTime = endTime; }
 
 
     public Room getRoom() { return room; }
-
     public void setRoom(Room room) {
         this.room = room;
     }
 
 
-    public List<Participant> getParticipants() {
-        return participants;
-    }
+    public List<Participant> getParticipants() { return participants; }
 
     /*public void setParticipants(List<Participant> participants) {
         this.participants = participants;

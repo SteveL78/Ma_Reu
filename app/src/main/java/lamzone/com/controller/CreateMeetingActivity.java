@@ -1,24 +1,17 @@
 package lamzone.com.controller;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.DatabaseErrorHandler;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -27,11 +20,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.w3c.dom.DOMStringList;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,10 +33,8 @@ import lamzone.com.di.DI;
 import lamzone.com.model.Meeting;
 import lamzone.com.model.Participant;
 import lamzone.com.model.Room;
-import lamzone.com.service.DummyMeetingGenerator;
 import lamzone.com.service.MeetingApiService;
 import lamzone.com.service.ParticipantGenerator;
-import lamzone.com.ui.MyMeetingRecyclerViewAdapter;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -140,7 +126,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         List<String> rooms = new ArrayList<>();
         rooms.add(0, "Cliquer ici");
         for (Room room : mApiService.getRooms()) {
-            rooms.add(room.getName());
+            rooms.add(room.getNameRoom());
         }
 
         // Style and populate the Spinner
@@ -309,11 +295,11 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         }
 
 
-        // On vérifie que l'utilisateur a bien indiqué une date et une de début de réunion
+        // On vérifie que l'utilisateur a bien indiqué une date et une heure de début de réunion
         if (calendarStart == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
             myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Veillez à bien indiquer une date et une heure de début");
+            myPopUp.setMessage("Veillez à bien indiquer une date et une heure de début.");
             myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -329,7 +315,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         if (calendarEnd == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
             myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Merci de préciser l'heure de fin de la réunion");
+            myPopUp.setMessage("Merci de préciser l'heure de fin de la réunion.");
             myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -346,10 +332,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
         // On vérifie que la date de fin n'est pas antérieure à la date de début
         if (startDate.after(endDate)) {
-            // TODO mettre popup
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
             myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Merci de préciser l'heure de fin de la réunion");
+            myPopUp.setMessage("Merci de modifier l'heure de fin de réunion qui ne peut être antérieure à l'heure de début.");
             myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -365,7 +350,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         if (room == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
             myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Vous devez sélectionner une salle de réunion");
+            myPopUp.setMessage("Vous devez sélectionner une salle de réunion.");
             myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -378,12 +363,40 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
 
         // On vérifie qu'au moins 1 participant est indiqué
-        String [] participants = multiAutoCompleteTextView.getText().toString().split(",");
-        if (participants.length == 0) {
-            // TODO : mettre popup
+        ArrayList<String> participants = new ArrayList<String>();
+        String [] unfilteredParticipants = multiAutoCompleteTextView.getText().toString().split(",");
+
+        for (String p : unfilteredParticipants){
+            if (!p.isEmpty()){
+                participants.add(p);
+            }
+        }
+        if (participants.isEmpty()) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
             myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Vous devez sélectionner une salle de réunion");
+            myPopUp.setMessage("Merci d'indiquer au moins un participant.");
+            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
+                }
+            });
+            myPopUp.create().show();
+            return;
+        }
+
+        boolean roomIsFree = true;
+        for (Meeting m : mApiService.getMeetings()) {
+            if (m.getRoom().getNameRoom().equals(room.getNameRoom()) &&
+                    ((startDate.before(m.getEndTime()) && endDate.after(m.getStartTime())))) {
+                roomIsFree = false;
+            }
+        }
+
+        if (!roomIsFree) {
+            AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
+            myPopUp.setTitle("ATTENTION");
+            myPopUp.setMessage("Cette salle n'est plus disponible.");
             myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -395,12 +408,13 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         }
 
 
-        // TODO vérifier la disponibilité de la salle
-
-
-
-
+        
+        // TODO : transformer liste de String en liste de particpants
+         Meeting newMeeting = new Meeting(System.currentTimeMillis(), meetingSubject, startDate, endDate, room, participants);
+            mApiService.addMeeting(newMeeting);
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
