@@ -26,7 +26,7 @@ public class Participant implements Serializable {
         return id;
     }
 
-    public String getParticipantName() {
+    public String getName() {
         return participantName;
     }
 

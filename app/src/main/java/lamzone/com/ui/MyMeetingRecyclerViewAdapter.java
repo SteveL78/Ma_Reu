@@ -23,8 +23,6 @@ import lamzone.com.R;
 import lamzone.com.events.DeleteMeetingEvent;
 import lamzone.com.events.OpenMeetingEvent;
 import lamzone.com.model.Meeting;
-import lamzone.com.model.Participant;
-import lamzone.com.service.RoomGenerator;
 
 /**
  * Created by Steve LEROY on 07/04/2020.
@@ -33,8 +31,6 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
 
     // POUR LES DONNEES
     private List<Meeting> mMeetings;
-    private List<RoomGenerator> mRoomGenerators;
-    private List<Participant> mParticipants;
 
 
     // CONSTRUCTOR
@@ -66,8 +62,11 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         dateLabel = dateLabel.replace(':', 'h');
         holder.mMeetingObject.setText(meeting.getSubject());     // on affiche l'objet (le topic) de la réunion
         holder.mBeginHour.setText(dateLabel);         // On affiche l'heure de début de la réunion
-        holder.mRoomName.setText(meeting.getRoom().getNameRoom());          // on affiche le nom de la salle de réunion
-        holder.mColorRoom.setImageResource(meeting.getRoom().getColorRoom());
+        holder.mRoomName.setText(meeting.getRoom().getName());          // on affiche le nom de la salle de réunion
+        holder.mColorRoom.setImageResource(meeting.getRoom().getColor());
+        holder.mEMail.setText(meeting.getParticipants().get(0).getEMail());
+
+        // TODO afficher la liste des email
 
 
 

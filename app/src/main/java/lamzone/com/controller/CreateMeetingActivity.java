@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,13 +68,13 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private Room room = null;
 
 
+    ArrayList<String> listOfParticipantsNames = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
-
-/*        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
 
         mMeetingSubjectTv = findViewById(R.id.meeting_subject_editText);
         mStartTv = findViewById(R.id.start_textView);
@@ -87,6 +86,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mSaveBtn = findViewById(R.id.save_btn);
 
         multiAutoCompleteTextView = findViewById(R.id.multiautocompletetextview);
+
 
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +126,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         List<String> rooms = new ArrayList<>();
         rooms.add(0, "Cliquer ici");
         for (Room room : mApiService.getRooms()) {
-            rooms.add(room.getNameRoom());
+            rooms.add(room.getName());
         }
 
         // Style and populate the Spinner
@@ -162,7 +162,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
         List<String> participants = new ArrayList<>();
         for (Participant participant : mApiService.getParticipants()) {
-            participants.add(participant.getParticipantName());
+            participants.add(participant.getName());
         }
         ArrayAdapter<String> arrayAdapterParticipant;
         arrayAdapterParticipant = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, participants);
@@ -218,7 +218,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         };
 
-        final  Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
         DatePickerDialog dp = new DatePickerDialog(CreateMeetingActivity.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         Date date = new Date();
         dp.getDatePicker().setMinDate(date.getTime());
@@ -245,30 +245,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         };
 
-        final  Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
         new TimePickerDialog(CreateMeetingActivity.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
     }       // FIN TIMEPICKER
-
-
-    // On désactive le bouton enregistrer tant que le
-/*        mSaveBtn.setEnabled(false);
-        mMeetingSubjectTv.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mSaveBtn.setEnabled(charSequence.toString().length() != 0);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });*/
-
 
 
     // ============= VERIFICATION DES CHAMPS LORS DE L'ENREGISTREMENT  =============
@@ -363,15 +342,15 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
 
         // On vérifie qu'au moins 1 participant est indiqué
-        ArrayList<String> participants = new ArrayList<String>();
-        String [] unfilteredParticipants = multiAutoCompleteTextView.getText().toString().split(",");
+        ArrayList<String> participantNameList = new ArrayList<String>();
+        String[] unfilteredParticipants = multiAutoCompleteTextView.getText().toString().split(",");
 
-        for (String p : unfilteredParticipants){
-            if (!p.isEmpty()){
-                participants.add(p);
+        for (String p : unfilteredParticipants) {
+            if (!p.isEmpty()) {
+                participantNameList.add(p);
             }
         }
-        if (participants.isEmpty()) {
+        if (participantNameList.isEmpty()) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
             myPopUp.setTitle("ATTENTION");
             myPopUp.setMessage("Merci d'indiquer au moins un participant.");
@@ -385,14 +364,15 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             return;
         }
 
+
+        // On vérifie si la salle est libre
         boolean roomIsFree = true;
         for (Meeting m : mApiService.getMeetings()) {
-            if (m.getRoom().getNameRoom().equals(room.getNameRoom()) &&
+            if (m.getRoom().getName().equals(room.getName()) &&
                     ((startDate.before(m.getEndTime()) && endDate.after(m.getStartTime())))) {
                 roomIsFree = false;
             }
         }
-
         if (!roomIsFree) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(activity);
             myPopUp.setTitle("ATTENTION");
@@ -408,12 +388,19 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         }
 
 
-        
-        // TODO : transformer liste de String en liste de particpants
-         Meeting newMeeting = new Meeting(System.currentTimeMillis(), meetingSubject, startDate, endDate, room, participants);
-            mApiService.addMeeting(newMeeting);
-    }
+        // TODO : transformer liste de String en liste de participants
+        ArrayList<Participant> participantList = new ArrayList<>();
+        for (Participant p : mApiService.getParticipants()) {
+            if (participantNameList.contains(p.getName())) {
+                participantList.add(p);
+            }
 
+        }
+
+        Meeting newMeeting = new Meeting(System.currentTimeMillis(), meetingSubject, startDate, endDate, room, participantList);
+        mApiService.addMeeting(newMeeting);
+        finish();
+    }
 
 
     @Override

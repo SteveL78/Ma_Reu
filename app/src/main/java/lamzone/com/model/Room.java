@@ -27,11 +27,11 @@ public class Room implements Serializable {
         return id;
     }
 
-    public String getNameRoom() {
+    public String getName() {
         return nameRoom;
     }
 
-    public int getColorRoom() {
+    public int getColor() {
         return colorRoom;
     }
 

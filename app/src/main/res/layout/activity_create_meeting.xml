@@ -162,6 +162,37 @@
 
         </LinearLayout>
 
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+        android:id="@+id/reunionAboutLyt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"/>
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
         <Button
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
@@ -174,6 +205,8 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:onClick="onCreateMeetingClicked"/>
+
+
     </LinearLayout>
 
 </ScrollView>
