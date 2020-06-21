@@ -388,7 +388,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         }
 
 
-        // TODO : transformer liste de String en liste de participants
+        // On transformer liste de String en liste de participants
         ArrayList<Participant> participantList = new ArrayList<>();
         for (Participant p : mApiService.getParticipants()) {
             if (participantNameList.contains(p.getName())) {
@@ -400,6 +400,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         Meeting newMeeting = new Meeting(System.currentTimeMillis(), meetingSubject, startDate, endDate, room, participantList);
         mApiService.addMeeting(newMeeting);
         finish();
+
     }
 
 

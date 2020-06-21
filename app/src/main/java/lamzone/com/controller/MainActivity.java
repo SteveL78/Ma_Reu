@@ -17,6 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
+
 import lamzone.com.R;
 import lamzone.com.di.DI;
 import lamzone.com.events.DeleteMeetingEvent;
@@ -36,17 +38,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         mApiService = DI.getMeetingApiService();
-        adapter = new MyMeetingRecyclerViewAdapter(mApiService.getMeetings());
         rv = findViewById(R.id.meetings_list_recyclerView);
-
         rv.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyMeetingRecyclerViewAdapter();
         rv.setAdapter(adapter);
 
-
         FloatingActionButton fabBtn = findViewById(R.id.fab_btn);
-
         fabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        adapter.setData(mApiService.getMeetings());
+        adapter.notifyDataSetChanged(); // Refresh
     }
 
 

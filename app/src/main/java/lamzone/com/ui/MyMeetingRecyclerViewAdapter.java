@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,6 +24,7 @@ import lamzone.com.R;
 import lamzone.com.events.DeleteMeetingEvent;
 import lamzone.com.events.OpenMeetingEvent;
 import lamzone.com.model.Meeting;
+import lamzone.com.model.Participant;
 
 /**
  * Created by Steve LEROY on 07/04/2020.
@@ -34,9 +36,7 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
 
 
     // CONSTRUCTOR
-    public MyMeetingRecyclerViewAdapter(List<Meeting> items) {
-        mMeetings = items;
-    }
+    public void setData (List<Meeting> items) { mMeetings = items;}
 
 
 
@@ -64,9 +64,19 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         holder.mBeginHour.setText(dateLabel);         // On affiche l'heure de début de la réunion
         holder.mRoomName.setText(meeting.getRoom().getName());          // on affiche le nom de la salle de réunion
         holder.mColorRoom.setImageResource(meeting.getRoom().getColor());
-        holder.mEMail.setText(meeting.getParticipants().get(0).getEMail());
+        //holder.mEMail.setText(meeting.getParticipants().get(0).getEMail());
+        String result = "";
 
-        // TODO afficher la liste des email
+        // TODO USE STRING BUILDER
+        List<Participant> participantList = meeting.getParticipants();
+        for (Participant p : participantList){
+            String eMail = p.getEMail();
+            result = result + eMail + "; ";
+        }
+        holder.mEMail.setText(result);
+
+
+
 
 
 
