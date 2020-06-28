@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_list_parent"
-    android:orientation="vertical">
+    android:id="@+id/item_list_parent">
+
 
     <ImageView
         android:id="@+id/item_list_color"
@@ -14,79 +14,77 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/ic_brightness_1_blue2_24dp"/>
 
     <TextView
         android:id="@+id/item_list_object"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="10dp"
         tools:text="Réunion A"
-        android:textColor="@color/colorCurrentText"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="15dp"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/email"
-        app:layout_constraintStart_toEndOf="@+id/item_list_color"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/colorCurrentText"
+        android:layout_toEndOf="@+id/item_list_color" />
 
     <TextView
         android:id="@+id/item_list_hour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="14h00"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@color/colorCurrentText"
-        app:layout_constraintBottom_toBottomOf="@+id/item_list_object"
-        app:layout_constraintStart_toEndOf="@+id/item_list_object"
-        app:layout_constraintTop_toTopOf="@+id/item_list_object" />
+        android:layout_toEndOf="@+id/item_list_object"/>
 
     <TextView
         android:id="@+id/item_list_room_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Peach"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@color/colorCurrentText"
-        app:layout_constraintBottom_toBottomOf="@+id/item_list_hour"
-        app:layout_constraintStart_toEndOf="@+id/item_list_hour"
-        app:layout_constraintTop_toTopOf="@+id/item_list_hour" />
+        android:layout_toEndOf="@id/item_list_hour" />
 
-
-    <TextView
-        android:id="@+id/email"
+    <HorizontalScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="10dp"
-        android:ellipsize="end"
-        android:lines="1"
-        android:scrollHorizontally="true"
-        android:focusable="true"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:text="@string/tv_email"
-        android:textColor="@color/colorEMail"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/item_list_delete_button"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/item_list_color"
-        app:layout_constraintTop_toBottomOf="@+id/item_list_object" />
+        android:layout_marginEnd="5dp"
+        android:scrollbars="none"
+        android:layout_alignStart="@+id/item_list_object"
+        android:layout_toStartOf="@+id/item_list_delete_button"
+        android:layout_below="@+id/item_list_object" >
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:focusable="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:text="@string/tv_email"
+            android:textSize="12sp"
+            android:textColor="@color/colorEMail" />
+    </HorizontalScrollView>
 
     <ImageButton
         android:id="@+id/item_list_delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_toEndOf="@id/item_list_parent"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
         android:background="@null"
         android:src="@drawable/ic_delete_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/item_list_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/item_list_color" />
+        tools:ignore="NotSibling" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

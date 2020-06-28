@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +37,9 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
 
 
     // CONSTRUCTOR
-    public void setData (List<Meeting> items) { mMeetings = items;}
+    public void setData(List<Meeting> items) {
+        mMeetings = items;
+    }
 
 
 
@@ -63,19 +66,17 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         holder.mMeetingObject.setText(meeting.getSubject());     // on affiche l'objet (le topic) de la réunion
         holder.mBeginHour.setText(dateLabel);         // On affiche l'heure de début de la réunion
         holder.mRoomName.setText(meeting.getRoom().getName());          // on affiche le nom de la salle de réunion
-        holder.mColorRoom.setImageResource(meeting.getRoom().getColor());
+        holder.mColorRoom.setImageResource(meeting.getRoom().getColor()); // On affiche l'image correspondant à la couleur de la room
 
-
-       List<Participant> participantList = meeting.getParticipants();
+        // On utilise un StringBuilder pour afficher la liste des participants
+        List<Participant> participantList = meeting.getParticipants();
         StringBuilder stringBuilder = new StringBuilder();
-        for (Participant p : participantList){
+        for (Participant p : participantList) {
             String eMail = p.getEMail();
-            stringBuilder.append(eMail).append("; "); //.toString ??
-
+            stringBuilder.append(eMail).append("; ");
         }
         String totale = stringBuilder.toString();
         holder.mEMail.setText(totale);
-
 
 
         /* ======================= BOUTON DELETE =======================
@@ -128,7 +129,7 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         public TextView mEMail;
 
         @BindView(R.id.item_list_parent)
-        public ConstraintLayout mParentView;
+        public RelativeLayout mParentView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
