@@ -64,20 +64,17 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         holder.mBeginHour.setText(dateLabel);         // On affiche l'heure de début de la réunion
         holder.mRoomName.setText(meeting.getRoom().getName());          // on affiche le nom de la salle de réunion
         holder.mColorRoom.setImageResource(meeting.getRoom().getColor());
-        //holder.mEMail.setText(meeting.getParticipants().get(0).getEMail());
-        String result = "";
 
-        // TODO USE STRING BUILDER
-        List<Participant> participantList = meeting.getParticipants();
+
+       List<Participant> participantList = meeting.getParticipants();
+        StringBuilder stringBuilder = new StringBuilder();
         for (Participant p : participantList){
             String eMail = p.getEMail();
-            result = result + eMail + "; ";
+            stringBuilder.append(eMail).append("; "); //.toString ??
+
         }
-        holder.mEMail.setText(result);
-
-
-
-
+        String totale = stringBuilder.toString();
+        holder.mEMail.setText(totale);
 
 
 
@@ -103,7 +100,7 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         });
     }
 
-    // ============= RECYCLERVIEW : ON R2CUPERE LE NOMBRE D'ELEMENTS =============
+    // ============= RECYCLERVIEW : ON RECUPERE LE NOMBRE D'ELEMENTS =============
     @Override
     public int getItemCount() {
         return mMeetings.size();

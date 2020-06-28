@@ -11,32 +11,8 @@
         <item
             android:id="@+id/all_meetings"
             android:checkable="false"
-
             android:title="Toutes les réunions" />
 
-
-        <item
-            android:id="@+id/select_menu"
-            android:checkable="false"
-            android:title="@string/trier" >
-
-            <menu>
-                <item
-                    android:id="@+id/select_by_room"
-                    android:checkable="false"
-                    android:title="par salle"/>
-
-                <item
-                    android:id="@+id/select_by_ascending_date"
-                    android:checkable="false"
-                    android:title="par date croissante" />
-
-                <item
-                    android:id="@+id/select_by_increasing_date"
-                    android:checkable="false"
-                    android:title="par date décroissante" />
-            </menu>
-        </item>
 
 
         <item

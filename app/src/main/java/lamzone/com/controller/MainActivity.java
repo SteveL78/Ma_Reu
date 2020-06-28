@@ -57,6 +57,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // On s'enregistre auprès d'eventBus pour recevoir un évènement (onStart et onStop car cycle de vie de l'activité ou du fragment)
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     public void onResume(){
         super.onResume();
@@ -106,20 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
 
-            case R.id.select_menu:
-                Toast.makeText(this, "Menu Trier sélectionné", Toast.LENGTH_LONG).show();
-                return true;
-            case R.id.select_by_room:
-                Toast.makeText(this, "Menu Trier par salle sélectionné", Toast.LENGTH_LONG).show();
-                return true;
-            case R.id.select_by_ascending_date:
-                Toast.makeText(this, "Menu Trier par date croissant sélectionné", Toast.LENGTH_LONG).show();
-                return true;
-            case R.id.select_by_increasing_date:
-                Toast.makeText(this, "Menu Trier par date décroissant sélectionné", Toast.LENGTH_LONG).show();
-                return true;
-
-
             case R.id.filter_menu:
                 Toast.makeText(this, "Menu Filtrer sélectionné", Toast.LENGTH_SHORT).show();
                 return true;
@@ -140,18 +139,7 @@ public class MainActivity extends AppCompatActivity {
     } // ==================== FIN FILTRE DE LA TOOLBAR ====================
 
 
-    // On s'enregistre auprès d'eventBus pour recevoir un évènement (onStart et onStop car cycle de vie de l'activité ou du fragment)
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
 
 
 }
