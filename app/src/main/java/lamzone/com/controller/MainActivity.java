@@ -2,14 +2,20 @@ package lamzone.com.controller;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,21 +23,25 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.List;
+import java.text.DateFormat;
+import java.util.Calendar;
 
 import lamzone.com.R;
 import lamzone.com.di.DI;
 import lamzone.com.events.DeleteMeetingEvent;
 import lamzone.com.events.OpenMeetingEvent;
 import lamzone.com.service.MeetingApiService;
+import lamzone.com.ui.DatePickerFragment;
 import lamzone.com.ui.MyMeetingRecyclerViewAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
 
     private MeetingApiService mApiService;
     private MyMeetingRecyclerViewAdapter adapter;
     private RecyclerView rv;
+
+    private String filterText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         adapter.setData(mApiService.getMeetings());
         adapter.notifyDataSetChanged(); // Refresh
@@ -95,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Fired if the user clicks on delete button
      */
-
     @Subscribe
     public void deleteMeeting(DeleteMeetingEvent deleteMeetingEvent) {
         mApiService.deleteMeeting(deleteMeetingEvent.getMeeting());
@@ -104,27 +113,44 @@ public class MainActivity extends AppCompatActivity {
 
 
     // ==================== FILTRE TOOLBAR ====================
+
+    /**
+     * Create the filter menu
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.filter_icon);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
 
+    /**
+     * Set option menu
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        filterText = item.getTitle().toString();
         switch (item.getItemId()) {
-            case R.id.all_meetings:
-                Toast.makeText(this, "Menu Toutes les réunions sélectionné", Toast.LENGTH_LONG).show();
+            case R.id.reset:
+                Toast.makeText(this, "Menu Réinitialiser les réunions sélectionné", Toast.LENGTH_LONG).show();
                 return true;
 
 
             case R.id.filter_menu:
                 Toast.makeText(this, "Menu Filtrer sélectionné", Toast.LENGTH_SHORT).show();
                 return true;
+
             case R.id.filter_by_date:
                 Toast.makeText(this, "Menu Filtrer par date sélectionné", Toast.LENGTH_SHORT).show();
+                showDateDialog();
                 return true;
+
             case R.id.filter_by_room:
                 Toast.makeText(this, "Menu Filtrer par salle sélectionné", Toast.LENGTH_SHORT).show();
                 return true;
@@ -132,11 +158,69 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Salle Mario sélectionnée", Toast.LENGTH_SHORT).show();
                 return true;
 
+            case R.id.Luigi:
+                Toast.makeText(this, "Salle Luigi sélectionnée", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.Peach:
+                Toast.makeText(this, "Salle Peach sélectionnée", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.Toad:
+                Toast.makeText(this, "Salle Toad sélectionnée", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.Yoshi:
+                Toast.makeText(this, "Salle Yoshi sélectionnée", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.Harmonie:
+                Toast.makeText(this, "Salle Harmonie sélectionnée", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.Wario:
+                Toast.makeText(this, "Salle Wario sélectionnée", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.Geno:
+                Toast.makeText(this, "Salle Géno sélectionnée", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.Pauline:
+                Toast.makeText(this, "Salle Pauline sélectionnée", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.Funky_Kong:
+                Toast.makeText(this, "Salle Funky Kong sélectionnée", Toast.LENGTH_SHORT).show();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
 
         }
     } // ==================== FIN FILTRE DE LA TOOLBAR ====================
+
+    /**
+     * date picker for date filter
+     */
+    public void showDateDialog() {
+        DialogFragment datePicker = new DatePickerFragment();
+        datePicker.show(getSupportFragmentManager(), "date picker");
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        String filterDate = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
+
+        Toast.makeText(this, filterDate, Toast.LENGTH_SHORT).show();
+
+    }
+
 
 
 

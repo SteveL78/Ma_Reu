@@ -6,7 +6,11 @@ package lamzone.com.service;
 //|----------> Fourni la liste des Meetings à la demande
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import javax.xml.transform.Result;
 
 import lamzone.com.model.Meeting;
 import lamzone.com.model.Participant;
@@ -52,6 +56,30 @@ public class DummyMeetingApiService implements MeetingApiService {
         meetings.add(meeting);
         }    // Ajouter un meeting
 
+
+
+    // On récupère le DatePicker
+    @Override
+    public List<Meeting> getMeeting(Calendar calendar) {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // On le compare à notre liste
+        List<Meeting> result = new ArrayList<Meeting>();
+        for (Meeting m : meetings ){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(m.getStartTime());
+            int meetingYear = cal.get(Calendar.YEAR);
+            int meetingMonth = cal.get(Calendar.MONTH);
+            int meetingDayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+
+            if(meetingYear == year && meetingMonth == month && meetingDayOfMonth == dayOfMonth){
+                result.add(m);
+            }
+        }
+        return result;
+    }
 
 
 }

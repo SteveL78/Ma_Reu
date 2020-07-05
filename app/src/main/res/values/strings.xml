@@ -15,6 +15,8 @@
     <string name="save_btn">Enregistrer</string>
 
 
+
+
     <string name="room01">Mario</string>
     <string name="room02">Luigi</string>
     <string name="room03">Peach</string>
@@ -28,5 +30,6 @@
     <string name="trier">Trier</string>
     <string name="filtrer">Filtrer</string>
     <string name="tv_email">maxime@lamzone.com</string>
+    <string name="reinitialiser_les_filtres">Réinitialiser les filtres</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package lamzone.com.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import lamzone.com.model.Meeting;
@@ -34,7 +36,7 @@ public interface MeetingApiService {
     void addMeeting(Meeting meeting);     // ajoute un meeting
 
 
-
+    List<Meeting> getMeeting(Calendar calendar);
 
 
 }

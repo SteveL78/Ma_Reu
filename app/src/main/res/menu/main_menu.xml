@@ -9,9 +9,9 @@
             android:id="@+id/filter_icon"
             app:showAsAction="ifRoom|collapseActionView"/>
         <item
-            android:id="@+id/all_meetings"
+            android:id="@+id/reset"
             android:checkable="false"
-            android:title="Toutes les réunions" />
+            android:title="@string/reinitialiser_les_filtres" />
 
 
 
