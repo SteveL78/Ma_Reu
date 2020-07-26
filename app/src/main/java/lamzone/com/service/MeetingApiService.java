@@ -36,7 +36,15 @@ public interface MeetingApiService {
     void addMeeting(Meeting meeting);     // ajoute un meeting
 
 
-    List<Meeting> getMeeting(Calendar calendar);
+    /**
+     * Get all Meetings in order by Day (liste filtrée)
+     */
+    List<Meeting> filterMeetingListForDay(Calendar calendar);
 
+
+    /**
+     * Get all Meetings in order of Rooms (liste filtrée)
+     */
+    List<Meeting> filterMeetingListForRoom(String room);
 
 }

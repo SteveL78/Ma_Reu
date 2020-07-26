@@ -23,7 +23,7 @@ public class Meeting implements Serializable {
     private Room room;          // n° de la salle
     private List<Participant> participants; // email des particpants
 
-
+    private boolean isMeetingInFilterList; // boolean pour liste filtrée (ou liste complète)
     /**
      * Constructor
      *
@@ -39,6 +39,8 @@ public class Meeting implements Serializable {
 
         this.room = room;
         this.participants = participants;
+
+        this.isMeetingInFilterList = false;
     }
 
 
@@ -74,7 +76,13 @@ public class Meeting implements Serializable {
         this.participants = participants;
     }*/
 
+    public boolean isMeetingInFilterList() {
+        return isMeetingInFilterList;
+    }
 
+    public void setMeetingInFilterList(boolean isMeetingInFilterList) {
+        this.isMeetingInFilterList = isMeetingInFilterList;
+    }
 
     @Override
     public boolean equals(Object o) {

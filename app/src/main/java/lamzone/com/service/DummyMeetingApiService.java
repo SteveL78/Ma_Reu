@@ -58,9 +58,9 @@ public class DummyMeetingApiService implements MeetingApiService {
 
 
 
-    // On récupère le DatePicker
+    // On récupère la date sélectionnée par le DatePicker
     @Override
-    public List<Meeting> getMeeting(Calendar calendar) {
+    public List<Meeting> filterMeetingListForDay(Calendar calendar) {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -80,6 +80,24 @@ public class DummyMeetingApiService implements MeetingApiService {
         }
         return result;
     }
+
+
+    @Override
+    public List<Meeting> filterMeetingListForRoom(String room) {
+        // Récupérer la liste de réunions par salle
+        List<Meeting> result = new ArrayList<>();
+        for (Meeting m : meetings){
+            String nameRoom = m.getRoom().getName();
+
+            if(nameRoom.equals(room)){
+                result.add(m);
+            }
+        }
+
+        // l'afficher
+        return result;
+    }
+
 
 
 }

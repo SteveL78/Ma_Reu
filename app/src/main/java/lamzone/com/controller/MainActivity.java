@@ -3,8 +3,6 @@ package lamzone.com.controller;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,11 +23,13 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import lamzone.com.R;
 import lamzone.com.di.DI;
 import lamzone.com.events.DeleteMeetingEvent;
 import lamzone.com.events.OpenMeetingEvent;
+import lamzone.com.model.Meeting;
 import lamzone.com.service.MeetingApiService;
 import lamzone.com.ui.DatePickerFragment;
 import lamzone.com.ui.MyMeetingRecyclerViewAdapter;
@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private MyMeetingRecyclerViewAdapter adapter;
     private RecyclerView rv;
 
-    private String filterText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,10 +134,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
      */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        filterText = item.getTitle().toString();
         switch (item.getItemId()) {
             case R.id.reset:
                 Toast.makeText(this, "Menu Réinitialiser les réunions sélectionné", Toast.LENGTH_LONG).show();
+                List<Meeting> meetingsReset = mApiService.getMeetings();
+                adapter.setData(meetingsReset);
+                adapter.notifyDataSetChanged(); // Refresh
                 return true;
 
 
@@ -153,45 +154,58 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
             case R.id.filter_by_room:
                 Toast.makeText(this, "Menu Filtrer par salle sélectionné", Toast.LENGTH_SHORT).show();
+                mApiService.getMeetings();
+                adapter.notifyDataSetChanged();
                 return true;
             case R.id.Mario:
                 Toast.makeText(this, "Salle Mario sélectionnée", Toast.LENGTH_SHORT).show();
+                filterItemRoom("Mario");
                 return true;
 
             case R.id.Luigi:
                 Toast.makeText(this, "Salle Luigi sélectionnée", Toast.LENGTH_SHORT).show();
+                filterItemRoom("Luigi");
                 return true;
 
             case R.id.Peach:
                 Toast.makeText(this, "Salle Peach sélectionnée", Toast.LENGTH_SHORT).show();
+                filterItemRoom("Peach");
+                //toolbar.setTitle("Ma réunion - Salle Peach");
                 return true;
 
             case R.id.Toad:
                 Toast.makeText(this, "Salle Toad sélectionnée", Toast.LENGTH_SHORT).show();
+                filterItemRoom("Toad");
                 return true;
 
             case R.id.Yoshi:
                 Toast.makeText(this, "Salle Yoshi sélectionnée", Toast.LENGTH_SHORT).show();
+                filterItemRoom("Yoshi");
                 return true;
 
             case R.id.Harmonie:
                 Toast.makeText(this, "Salle Harmonie sélectionnée", Toast.LENGTH_SHORT).show();
+                filterItemRoom("Harmonie");
                 return true;
 
             case R.id.Wario:
                 Toast.makeText(this, "Salle Wario sélectionnée", Toast.LENGTH_SHORT).show();
+                filterItemRoom("Wario");
                 return true;
 
             case R.id.Geno:
                 Toast.makeText(this, "Salle Géno sélectionnée", Toast.LENGTH_SHORT).show();
+                filterItemRoom("Geno");
                 return true;
 
             case R.id.Pauline:
                 Toast.makeText(this, "Salle Pauline sélectionnée", Toast.LENGTH_SHORT).show();
+                filterItemRoom("Pauline");
                 return true;
 
             case R.id.Funky_Kong:
                 Toast.makeText(this, "Salle Funky Kong sélectionnée", Toast.LENGTH_SHORT).show();
+                filterItemRoom("Fonky Kong");
                 return true;
 
             default:
@@ -215,15 +229,36 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        String filterDate = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
+        //String filterDate = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
 
-        Toast.makeText(this, filterDate, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, filterDate, Toast.LENGTH_SHORT).show();
+
+        //Quelle devrait être la suite du process ici?
+        /* Récupérer les réunions du jour sélectionné */
+        List<Meeting> result = mApiService.filterMeetingListForDay(calendar);
+
+        // Afficher ses réunions
+        adapter.setData(result);
+        adapter.notifyDataSetChanged(); // Refresh
 
     }
 
+    /**
+     * Filter by room
+     */
+    public void filterItemRoom(String room) {
+
+        //Quelle devrait être la suite du process ici?
+        /* Récupérer les réunions du jour sélectionné */
+        List<Meeting> result = mApiService.filterMeetingListForRoom(room);
+
+        // Afficher ses réunions
+        adapter.setData(result);
+        adapter.notifyDataSetChanged(); // Refresh
 
 
 
 
 
+    }
 }
