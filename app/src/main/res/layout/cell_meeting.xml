@@ -11,9 +11,9 @@
         android:id="@+id/item_list_color"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="@dimen/imageMarginBottomInChangeAmount"
+        android:layout_marginTop="@dimen/imageMarginTopInChangeAmount"
+        android:layout_marginBottom="@dimen/imageMarginBottomInChangeAmount"
         android:src="@drawable/ic_brightness_1_blue2_24dp"/>
 
     <TextView
@@ -21,9 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Réunion A"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="15dp"
-        android:textSize="16sp"
+        android:layout_marginStart="@dimen/tvMarginStartInChangeAmount"
+        android:layout_marginTop="@dimen/tvMarginTopInChangeAmount"
+        android:textSize="@dimen/txtSizeInChangeAmount"
         android:textStyle="bold"
         android:textColor="@color/colorCurrentText"
         android:layout_toEndOf="@+id/item_list_color" />
@@ -33,9 +33,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="14h00"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:textSize="16sp"
+        android:layout_marginStart="@dimen/tvMarginStartInChangeAmount"
+        android:layout_marginTop="@dimen/tvMarginTopInChangeAmount"
+        android:textSize="@dimen/txtSizeInChangeAmount"
         android:textStyle="bold"
         android:textColor="@color/colorCurrentText"
         android:layout_toEndOf="@+id/item_list_object"/>
@@ -45,9 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Peach"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:textSize="16sp"
+        android:layout_marginStart="@dimen/tvMarginStartInChangeAmount"
+        android:layout_marginTop="@dimen/tvMarginTopInChangeAmount"
+        android:textSize="@dimen/txtSizeInChangeAmount"
         android:textStyle="bold"
         android:textColor="@color/colorCurrentText"
         android:layout_toEndOf="@id/item_list_hour" />
@@ -55,7 +55,7 @@
     <HorizontalScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="@dimen/scrollMarginEndInChangeAmount"
         android:scrollbars="none"
         android:layout_alignStart="@+id/item_list_object"
         android:layout_toStartOf="@+id/item_list_delete_button"
@@ -65,13 +65,13 @@
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="@dimen/emailMarginTopInChangeAmount"
             android:ellipsize="end"
             android:lines="1"
             android:focusable="true"
             android:marqueeRepeatLimit="marquee_forever"
             android:text="@string/tv_email"
-            android:textSize="12sp"
+            android:textSize="@dimen/emailTxtSizeInChangeAmount"
             android:textColor="@color/colorEMail" />
     </HorizontalScrollView>
 
@@ -80,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/item_list_parent"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="@dimen/imagebtnMarginEndInChangeAmount"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
         android:background="@null"

@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- dialog_change_amount -->
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="txtSizeInChangeAmount">16sp</dimen>
+    <dimen name="tvMarginStartInChangeAmount">10dp</dimen>
+    <dimen name="tvMarginTopInChangeAmount">15dp</dimen>
+
+    <!-- email_change_amount -->
+    <dimen name="emailTxtSizeInChangeAmount">12sp</dimen>
+    <dimen name="emailMarginTopInChangeAmount">2dp</dimen>
+
+    <!-- scrollView_change_amount -->
+    <dimen name="scrollMarginEndInChangeAmount">5dp</dimen>
+
+    <!-- image_change_amount -->
+    <dimen name="imageMarginStartInChangeAmount">10dp</dimen>
+    <dimen name="imageMarginTopInChangeAmount">10dp</dimen>
+    <dimen name="imageMarginBottomInChangeAmount">10dp</dimen>
+
+    <!-- imageBtn_change_amount -->
+    <dimen name="imagebtnMarginEndInChangeAmount">10dp</dimen>
+
 </resources>
