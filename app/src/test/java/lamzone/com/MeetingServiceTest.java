@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class MeetingServiceTest {
 
     private MeetingApiService service;
 
@@ -74,7 +74,7 @@ public class ExampleUnitTest {
     // Ajouter un meeting
     @Test
     public void addMeetingWithSuccess() {
-        Meeting meetingToAdd = new Meeting(142, "Réunion test", getDate("01/08/2020"), getDate("01/08/2020"),RoomGenerator.DUMMY_ROOMS.get(6), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(6)));
+        Meeting meetingToAdd = new Meeting(142, "Réunion test", getDate("01/08/2020 08:00"), getDate("01/08/2020 08:30"),RoomGenerator.DUMMY_ROOMS.get(6), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(6)));
         service.addMeeting(meetingToAdd);
         assertTrue(service.getMeetings().contains(meetingToAdd));
     }
@@ -93,12 +93,27 @@ public class ExampleUnitTest {
 
     // Filtrer les meetings par dates
 /*    @Test
-    public void filterByDateWithSuccess() {
-        List<Meeting> meetings = service.getMeetings();
-        List<Meeting> meetingByCreasingDate = DummyMeetingGenerator.DUMMY_MEETINGS.get();
+    public void getFilterByDateWithSuccess() {
+        Date expectedMeeting = DummyMeetingGenerator.DUMMY_MEETINGS.get(3).getStartTime();
+        assertEquals(service.filterMeetingListForDay(getDate2("27/01/2020 09:00")).get(0).getStartTime(), expectedMeeting);
+    }
 
+
+    private static Date getDate2() {
+        try {
+            return
+                    (new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault())).parse("27/01/2020 09:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
     }*/
-    // L'idée est de récupérer la liste des meetings, puis récupérer les dates de début et les trier et vérifier si chaque date est antérieure à la précédente
 
+
+    @Test
+    public void getFilterByRoomWithSuccess() {
+        String expectedRoom = DummyMeetingGenerator.DUMMY_MEETINGS.get(5).getRoom().getName();
+        assertEquals(service.filterMeetingListForRoom("Harmonie").get(0).getRoom().getName(), expectedRoom);
+    }
 
 }

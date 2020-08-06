@@ -5,19 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -33,7 +29,6 @@ import lamzone.com.model.Meeting;
 import lamzone.com.model.Participant;
 import lamzone.com.model.Room;
 import lamzone.com.service.MeetingApiService;
-import lamzone.com.service.ParticipantGenerator;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -69,12 +64,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         multiAutoCompleteTextView = findViewById(R.id.multiautocompletetextview);
 
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onCreateMeetingClicked();
-            }
-        });
+        saveBtn.setOnClickListener(view -> onCreateMeetingClicked());
 
         mApiService = DI.getMeetingApiService();
         mApiService.getRooms();
@@ -83,22 +73,14 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
         // ============== DATETIME PICKER =================
 
-        mStartDateBtn.setOnClickListener(new View.OnClickListener() {           // DATETIMEPICKER (DEBUT DE LA REUNION)
-            @Override
-            public void onClick(View view) {
-                showDateTimeDialog(mStartDateBtn);
-            }
-        });
+        // DATETIMEPICKER (DEBUT DE LA REUNION)
+        mStartDateBtn.setOnClickListener(view -> showDateTimeDialog(mStartDateBtn));
 
 
         // ============== TIME PICKER =================
 
-        mEndDateBtn.setOnClickListener(new View.OnClickListener() {     // DEBUT DU TIMEPICKER
-            @Override
-            public void onClick(View view) {
-                showTimeDialogEnd(mEndDateBtn);
-            }
-        });
+        // DEBUT DU TIMEPICKER
+        mEndDateBtn.setOnClickListener(view -> showTimeDialogEnd(mEndDateBtn));
 
 
         // ============ SPINNER ROOM ==============
@@ -153,49 +135,35 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
         // ============== DATETIME PICKER =================
 
-        mStartDateBtn.setOnClickListener(new View.OnClickListener() {           // DATETIMEPICKER (DEBUT DE LA REUNION)
-            @Override
-            public void onClick(View view) {
-                showDateTimeDialog(mStartDateBtn);
-            }
-        });
+        // DATETIMEPICKER (DEBUT DE LA REUNION)
+        mStartDateBtn.setOnClickListener(view -> showDateTimeDialog(mStartDateBtn));
 
 
         // ============== TIME PICKER =================
 
-        mEndDateBtn.setOnClickListener(new View.OnClickListener() {     // DEBUT DU TIMEPICKER
-            @Override
-            public void onClick(View view) {
-                showTimeDialogEnd(mEndDateBtn);
-            }
-        });
+        // DEBUT DU TIMEPICKER
+        mEndDateBtn.setOnClickListener(view -> showTimeDialogEnd(mEndDateBtn));
     }
 
 
     // =========== SUITE DATETIMEPICKER ================
 
     private void showDateTimeDialog(final Button mStartDateBtn) {          // SUITE DATETIMEPICKER (DEBUT DE LA REUNION)
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                calendarStart = Calendar.getInstance();
-                calendarStart.set(Calendar.YEAR, year);
-                calendarStart.set(Calendar.MONTH, month);
-                calendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, dayOfMonth) -> {
+            calendarStart = Calendar.getInstance();
+            calendarStart.set(Calendar.YEAR, year);
+            calendarStart.set(Calendar.MONTH, month);
+            calendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        calendarStart.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        calendarStart.set(Calendar.MINUTE, minute);
+            TimePickerDialog.OnTimeSetListener timeSetListener = (timePicker, hourOfDay, minute) -> {
+                calendarStart.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendarStart.set(Calendar.MINUTE, minute);
 
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
-                        mStartDateBtn.setText(simpleDateFormat.format(calendarStart.getTimeInMillis()));
-                    }
-                };
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
+                mStartDateBtn.setText(simpleDateFormat.format(calendarStart.getTimeInMillis()));
+            };
 
-                new TimePickerDialog(CreateMeetingActivity.this, timeSetListener, calendarStart.get(Calendar.HOUR_OF_DAY), calendarStart.get(Calendar.MINUTE), true).show();
-            }
+            new TimePickerDialog(CreateMeetingActivity.this, timeSetListener, calendarStart.get(Calendar.HOUR_OF_DAY), calendarStart.get(Calendar.MINUTE), true).show();
         };
 
         final Calendar calendar = Calendar.getInstance();
@@ -210,19 +178,16 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     private void showTimeDialogEnd(final Button mEndDateBtn) {             // SUITE TIMEPICKER
 
-        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                calendarEnd = Calendar.getInstance();
-                calendarEnd.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendarEnd.set(Calendar.MINUTE, minute);
-                calendarEnd.set(Calendar.DAY_OF_MONTH, calendarStart.get(Calendar.DAY_OF_MONTH));
-                calendarEnd.set(Calendar.MONTH, calendarStart.get(Calendar.MONTH));
-                calendarEnd.set(Calendar.YEAR, calendarStart.get(Calendar.YEAR));
+        TimePickerDialog.OnTimeSetListener timeSetListener = (timePicker, hourOfDay, minute) -> {
+            calendarEnd = Calendar.getInstance();
+            calendarEnd.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendarEnd.set(Calendar.MINUTE, minute);
+            calendarEnd.set(Calendar.DAY_OF_MONTH, calendarStart.get(Calendar.DAY_OF_MONTH));
+            calendarEnd.set(Calendar.MONTH, calendarStart.get(Calendar.MONTH));
+            calendarEnd.set(Calendar.YEAR, calendarStart.get(Calendar.YEAR));
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-                mEndDateBtn.setText(simpleDateFormat.format(calendarEnd.getTimeInMillis()));
-            }
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            mEndDateBtn.setText(simpleDateFormat.format(calendarEnd.getTimeInMillis()));
         };
 
         final Calendar calendar = Calendar.getInstance();
@@ -243,11 +208,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle("ATTENTION");
             myPopUp.setMessage("Merci d'indiquer le sujet de la réunion.");
-            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-                }
+            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
             return;
@@ -259,11 +221,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle("ATTENTION");
             myPopUp.setMessage("Veillez à bien indiquer une date et une heure de début.");
-            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-                }
+            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
             return;
@@ -275,11 +234,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle("ATTENTION");
             myPopUp.setMessage("Merci de préciser l'heure de fin de la réunion.");
-            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-                }
+            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
             return;
@@ -294,11 +250,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle("ATTENTION");
             myPopUp.setMessage("Merci de modifier l'heure de fin de réunion qui ne peut être antérieure à l'heure de début.");
-            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-                }
+            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
             return;
@@ -310,11 +263,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle("ATTENTION");
             myPopUp.setMessage("Vous devez sélectionner une salle de réunion.");
-            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-                }
+            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
             return;
@@ -322,7 +272,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
 
         // On vérifie qu'au moins 1 participant est indiqué
-        ArrayList<String> participantNameList = new ArrayList<String>();
+        ArrayList<String> participantNameList = new ArrayList<>();
         String[] unfilteredParticipants = multiAutoCompleteTextView.getText().toString().split(",");
 
         for (String p : unfilteredParticipants) {
@@ -334,11 +284,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle("ATTENTION");
             myPopUp.setMessage("Merci d'indiquer au moins un participant.");
-            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-                }
+            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
             return;
@@ -357,11 +304,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle("ATTENTION");
             myPopUp.setMessage("Cette salle n'est plus disponible.");
-            myPopUp.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-                }
+            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
             return;
