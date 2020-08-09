@@ -2,91 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group
-        android:checkableBehavior="single" >
+    <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/filter_icon"
-            app:showAsAction="ifRoom|collapseActionView"/>
+            app:showAsAction="ifRoom|collapseActionView" />
         <item
             android:id="@+id/reset"
             android:checkable="false"
             android:title="@string/reinitialiser_les_filtres" />
 
 
+        <item
+            android:id="@+id/filter_by_date"
+            android:checkable="false"
+            android:title="par date" />
 
         <item
-            android:id="@+id/filter_menu"
+            android:id="@+id/filter_by_room"
             android:checkable="false"
-            android:title="@string/filtrer" >
+            android:title="par salle">
 
-            <menu>
-                <item
-                    android:id="@+id/filter_by_date"
-                    android:checkable="false"
-                    android:title="par date"/>
-
-                <item
-                    android:id="@+id/filter_by_room"
-                    android:checkable="false"
-                    android:title="par salle" >
-
-                    <menu>
-
-                        <item
-                            android:id="@+id/Mario"
-                            android:checkable="false"
-                            android:title="@string/room01" />
-
-                        <item
-                            android:id="@+id/Luigi"
-                            android:checkable="false"
-                            android:title="@string/room02" />
-
-                        <item
-                            android:id="@+id/Peach"
-                            android:checkable="false"
-                            android:title="@string/room03" />
-
-                        <item
-                            android:id="@+id/Toad"
-                            android:checkable="false"
-                            android:title="@string/room04" />
-
-                        <item
-                            android:id="@+id/Yoshi"
-                            android:checkable="false"
-                            android:title="@string/room05" />
-
-                        <item
-                            android:id="@+id/Harmonie"
-                            android:checkable="false"
-                            android:title="@string/room06" />
-
-                        <item
-                            android:id="@+id/Wario"
-                            android:checkable="false"
-                            android:title="@string/room07" />
-
-
-                        <item
-                            android:id="@+id/Geno"
-                            android:checkable="false"
-                            android:title="@string/room08" />
-
-                        <item
-                            android:id="@+id/Pauline"
-                            android:checkable="false"
-                            android:title="@string/room09" />
-
-                        <item
-                            android:id="@+id/Funky_Kong"
-                            android:checkable="false"
-                            android:title="@string/room10" />
-                    </menu>
-                </item>
-
-            </menu>
         </item>
+
+
     </group>
 </menu>

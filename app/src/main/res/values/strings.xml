@@ -17,17 +17,7 @@
 
 
 
-    <string name="room01">Mario</string>
-    <string name="room02">Luigi</string>
-    <string name="room03">Peach</string>
-    <string name="room04">Toad</string>
-    <string name="room05">Yoshi</string>
-    <string name="room06">Harmonie</string>
-    <string name="room07">Wario</string>
-    <string name="room08">Géno</string>
-    <string name="room09">Pauline</string>
-    <string name="room10">Funky Kong</string>
-    <string name="trier">Trier</string>
+
     <string name="filtrer">Filtrer</string>
     <string name="tv_email">maxime@lamzone.com</string>
     <string name="reinitialiser_les_filtres">Réinitialiser les filtres</string>

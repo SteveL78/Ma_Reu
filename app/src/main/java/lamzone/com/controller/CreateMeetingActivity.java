@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import lamzone.com.model.Meeting;
 import lamzone.com.model.Participant;
 import lamzone.com.model.Room;
 import lamzone.com.service.MeetingApiService;
+import lamzone.com.service.RoomGenerator;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -40,6 +43,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private Button mStartDateBtn;
 
     private Button mEndDateBtn;
+
+    private Button buttonRoom;
 
     private MultiAutoCompleteTextView multiAutoCompleteTextView;
 
@@ -58,7 +63,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mMeetingSubjectTv = findViewById(R.id.meeting_subject_editText);
         mStartDateBtn = findViewById(R.id.select_date_btn);
         mEndDateBtn = findViewById(R.id.select_end_btn);
-        Spinner spinnerRoom = findViewById(R.id.spinner_room);
+        //Spinner spinnerRoom = findViewById(R.id.spinner_room);
+        buttonRoom = findViewById(R.id.room_btn);
         Button saveBtn = findViewById(R.id.save_btn);
 
         multiAutoCompleteTextView = findViewById(R.id.multiautocompletetextview);
@@ -85,7 +91,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
         // ============ SPINNER ROOM ==============
 
-        List<String> rooms = new ArrayList<>();
+       /* List<String> rooms = new ArrayList<>();
         rooms.add(0, "Cliquer ici");
         for (Room room : mApiService.getRooms()) {
             rooms.add(room.getName());
@@ -117,7 +123,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             public void onNothingSelected(AdapterView<?> adapterView) {
                 // TODO Auto-generated method stub
             }
-        });
+        });*/
 
 
         // =========== MULTIAUTOCOMPLETETEXTVIEW PARTICIPANT ================
@@ -347,6 +353,45 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    public void roomSelector(View view) {
+        // Create list of rooms
+
+
+        List<String> rooms = new ArrayList<>();
+
+        for (Room room : mApiService.getRooms()) {
+            rooms.add(room.getName());
+        }
+        CharSequence[] cs = rooms.toArray(new CharSequence[0]);
+
+        AlertDialog.Builder mbuilder = new AlertDialog.Builder(this);
+        mbuilder.setTitle("Sélectionner une salle"); // Set title of AlertDialog
+        mbuilder.setIcon(R.drawable.icon);
+        mbuilder.setSingleChoiceItems( cs, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        // Set neutral cancel button
+        mbuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        mbuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog mDialog = mbuilder.create();
+        mDialog.show();
 
     }
     // ======== End Toast Spinner Room end ===========

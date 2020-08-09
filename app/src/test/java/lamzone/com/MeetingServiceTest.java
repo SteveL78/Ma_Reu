@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -92,28 +93,21 @@ public class MeetingServiceTest {
 
 
     // Filtrer les meetings par dates
-/*    @Test
+    @Test
     public void getFilterByDateWithSuccess() {
-        Date expectedMeeting = DummyMeetingGenerator.DUMMY_MEETINGS.get(3).getStartTime();
-        assertEquals(service.filterMeetingListForDay(getDate2("27/01/2020 09:00")).get(0).getStartTime(), expectedMeeting);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getDate("31/12/2020 09:00"));
+        List<Meeting> filteredMeetings = service.filterMeetingListForDay(cal);
+        assertEquals(1, filteredMeetings.size());
+        assertEquals(1200, filteredMeetings.get(0).getId());
     }
-
-
-    private static Date getDate2() {
-        try {
-            return
-                    (new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault())).parse("27/01/2020 09:00");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new Date();
-    }*/
 
 
     @Test
     public void getFilterByRoomWithSuccess() {
-        String expectedRoom = DummyMeetingGenerator.DUMMY_MEETINGS.get(5).getRoom().getName();
-        assertEquals(service.filterMeetingListForRoom("Harmonie").get(0).getRoom().getName(), expectedRoom);
+        List<Meeting> filteredMeetings = service.filterMeetingListForRoom("Luigi");
+        assertEquals(1, filteredMeetings.size());
+        assertEquals(45, filteredMeetings.get(0).getId());
     }
 
 }

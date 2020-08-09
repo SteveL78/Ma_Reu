@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
 
     private MeetingApiService mApiService;
-    private MyMeetingRecyclerViewAdapter adapter;
+    public MyMeetingRecyclerViewAdapter adapter;
     private RecyclerView rv;
 
 
@@ -142,11 +142,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 adapter.notifyDataSetChanged(); // Refresh
                 return true;
 
-
-            case R.id.filter_menu:
-                Toast.makeText(this, "Menu Filtrer sélectionné", Toast.LENGTH_SHORT).show();
-                return true;
-
             case R.id.filter_by_date:
                 Toast.makeText(this, "Menu Filtrer par date sélectionné", Toast.LENGTH_SHORT).show();
                 showDateDialog();
@@ -156,56 +151,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 Toast.makeText(this, "Menu Filtrer par salle sélectionné", Toast.LENGTH_SHORT).show();
                 mApiService.getMeetings();
                 adapter.notifyDataSetChanged();
-                return true;
-            case R.id.Mario:
-                Toast.makeText(this, "Salle Mario sélectionnée", Toast.LENGTH_SHORT).show();
-                filterItemRoom("Mario");
-                return true;
-
-            case R.id.Luigi:
-                Toast.makeText(this, "Salle Luigi sélectionnée", Toast.LENGTH_SHORT).show();
-                filterItemRoom("Luigi");
-                return true;
-
-            case R.id.Peach:
-                Toast.makeText(this, "Salle Peach sélectionnée", Toast.LENGTH_SHORT).show();
-                filterItemRoom("Peach");
-                //toolbar.setTitle("Ma réunion - Salle Peach");
-                return true;
-
-            case R.id.Toad:
-                Toast.makeText(this, "Salle Toad sélectionnée", Toast.LENGTH_SHORT).show();
-                filterItemRoom("Toad");
-                return true;
-
-            case R.id.Yoshi:
-                Toast.makeText(this, "Salle Yoshi sélectionnée", Toast.LENGTH_SHORT).show();
-                filterItemRoom("Yoshi");
-                return true;
-
-            case R.id.Harmonie:
-                Toast.makeText(this, "Salle Harmonie sélectionnée", Toast.LENGTH_SHORT).show();
-                filterItemRoom("Harmonie");
-                return true;
-
-            case R.id.Wario:
-                Toast.makeText(this, "Salle Wario sélectionnée", Toast.LENGTH_SHORT).show();
-                filterItemRoom("Wario");
-                return true;
-
-            case R.id.Geno:
-                Toast.makeText(this, "Salle Géno sélectionnée", Toast.LENGTH_SHORT).show();
-                filterItemRoom("Geno");
-                return true;
-
-            case R.id.Pauline:
-                Toast.makeText(this, "Salle Pauline sélectionnée", Toast.LENGTH_SHORT).show();
-                filterItemRoom("Pauline");
-                return true;
-
-            case R.id.Funky_Kong:
-                Toast.makeText(this, "Salle Funky Kong sélectionnée", Toast.LENGTH_SHORT).show();
-                filterItemRoom("Fonky Kong");
                 return true;
 
             default:
@@ -228,10 +173,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-        //String filterDate = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
-
-       // Toast.makeText(this, filterDate, Toast.LENGTH_SHORT).show();
 
         //Quelle devrait être la suite du process ici?
         /* Récupérer les réunions du jour sélectionné */
