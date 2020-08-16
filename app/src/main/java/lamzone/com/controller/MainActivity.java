@@ -6,13 +6,16 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -30,7 +34,9 @@ import lamzone.com.di.DI;
 import lamzone.com.events.DeleteMeetingEvent;
 import lamzone.com.events.OpenMeetingEvent;
 import lamzone.com.model.Meeting;
+import lamzone.com.model.Room;
 import lamzone.com.service.MeetingApiService;
+import lamzone.com.service.RoomGenerator;
 import lamzone.com.ui.DatePickerFragment;
 import lamzone.com.ui.MyMeetingRecyclerViewAdapter;
 
@@ -40,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private MeetingApiService mApiService;
     public MyMeetingRecyclerViewAdapter adapter;
     private RecyclerView rv;
+
 
 
     @Override
@@ -94,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
      */
     @Subscribe
     public void openMeeting(OpenMeetingEvent event) {
-        // On ouvre une nouvelle activité (=CreateMeetingActivity) quand on clique sur un meeting de la liste
+        // On ouvre une nouvelle activité (=CreateMeetingActivity)
         Intent intent = new Intent(this, CreateMeetingActivity.class);
         intent.putExtra("meeting", event.meeting);
         startActivity(intent);
@@ -149,6 +156,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
             case R.id.filter_by_room:
                 Toast.makeText(this, "Menu Filtrer par salle sélectionné", Toast.LENGTH_SHORT).show();
+                roomSelector();
+
                 mApiService.getMeetings();
                 adapter.notifyDataSetChanged();
                 return true;
@@ -158,6 +167,56 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         }
     } // ==================== FIN FILTRE DE LA TOOLBAR ====================
+
+
+    /**
+     * Single Choice Item for Filter Rooms
+     */
+    private void roomSelector() {
+
+        // Create list of rooms
+        List<String> rooms = new ArrayList<>();
+
+        for (Room room : mApiService.getRooms()) {
+            rooms.add(room.getName());
+        }
+        CharSequence[] cs = rooms.toArray(new CharSequence[0]);
+
+        AlertDialog.Builder mbuilder = new AlertDialog.Builder(this);
+        mbuilder.setTitle("Sélectionner une salle"); // Set title of AlertDialog
+        mbuilder.setIcon(R.drawable.icon);
+        mbuilder.setSingleChoiceItems( cs, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String roomSelected = rooms.get(i);
+                filterItemRoom(roomSelected);
+
+            }
+
+        });
+        // Set neutral cancel button
+        mbuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        mbuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+
+        AlertDialog mDialog = mbuilder.create();
+        mDialog.show();
+
+    }
+
+
+
+
+
 
     /**
      * date picker for date filter
@@ -190,16 +249,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public void filterItemRoom(String room) {
 
         //Quelle devrait être la suite du process ici?
-        /* Récupérer les réunions du jour sélectionné */
+        /* Récupérer les réunions de la salle sélectionnée */
         List<Meeting> result = mApiService.filterMeetingListForRoom(room);
 
         // Afficher ses réunions
         adapter.setData(result);
         adapter.notifyDataSetChanged(); // Refresh
-
-
-
-
-
     }
 }

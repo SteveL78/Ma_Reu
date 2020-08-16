@@ -75,8 +75,8 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
             String eMail = p.getEMail();
             stringBuilder.append(eMail).append("; ");
         }
-        String totale = stringBuilder.toString();
-        holder.mEMail.setText(totale);
+        String total = stringBuilder.toString();
+        holder.mEMail.setText(total);
 
 
         /* ======================= BOUTON DELETE =======================

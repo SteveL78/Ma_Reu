@@ -72,9 +72,6 @@ public class Meeting implements Serializable {
 
     public List<Participant> getParticipants() { return participants; }
 
-    /*public void setParticipants(List<Participant> participants) {
-        this.participants = participants;
-    }*/
 
     public boolean isMeetingInFilterList() {
         return isMeetingInFilterList;

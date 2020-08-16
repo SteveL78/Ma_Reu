@@ -63,12 +63,10 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mMeetingSubjectTv = findViewById(R.id.meeting_subject_editText);
         mStartDateBtn = findViewById(R.id.select_date_btn);
         mEndDateBtn = findViewById(R.id.select_end_btn);
-        //Spinner spinnerRoom = findViewById(R.id.spinner_room);
         buttonRoom = findViewById(R.id.room_btn);
         Button saveBtn = findViewById(R.id.save_btn);
 
         multiAutoCompleteTextView = findViewById(R.id.multiautocompletetextview);
-
 
         saveBtn.setOnClickListener(view -> onCreateMeetingClicked());
 
@@ -89,43 +87,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mEndDateBtn.setOnClickListener(view -> showTimeDialogEnd(mEndDateBtn));
 
 
-        // ============ SPINNER ROOM ==============
-
-       /* List<String> rooms = new ArrayList<>();
-        rooms.add(0, "Cliquer ici");
-        for (Room room : mApiService.getRooms()) {
-            rooms.add(room.getName());
-        }
-
-        // Style and populate the Spinner
-        ArrayAdapter<String> dataAdapterRoom;
-        dataAdapterRoom = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, rooms);
-
-        // Dropdown layout Style
-        dataAdapterRoom.setDropDownViewResource(android.R.layout.simple_spinner_item);
-
-        // Attaching data adapter to spinner
-        spinnerRoom.setAdapter(dataAdapterRoom);
-
-        spinnerRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if (adapterView.getItemAtPosition(position).equals("Cliquer ici")) {
-                    // do nothing
-
-                } else {
-                    room = mApiService.getRooms().get(position);
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // TODO Auto-generated method stub
-            }
-        });*/
-
-
         // =========== MULTIAUTOCOMPLETETEXTVIEW PARTICIPANT ================
 
         List<String> participants = new ArrayList<>();
@@ -135,7 +96,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         ArrayAdapter<String> arrayAdapterParticipant;
         arrayAdapterParticipant = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, participants);
         multiAutoCompleteTextView.setAdapter(arrayAdapterParticipant);
-        multiAutoCompleteTextView.setThreshold(1);
+        multiAutoCompleteTextView.setThreshold(1); // minimum number of characters
         multiAutoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
 
@@ -282,8 +243,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         String[] unfilteredParticipants = multiAutoCompleteTextView.getText().toString().split(",");
 
         for (String p : unfilteredParticipants) {
-            if (!p.isEmpty()) {
-                participantNameList.add(p);
+            String str = p.trim();
+            if (!str.isEmpty()) {
+                participantNameList.add(str);
             }
         }
         if (participantNameList.isEmpty()) {
@@ -343,7 +305,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     }
 
 
-    // ========== Toast Spinner Room =============
+    // ========== POPUP ROOM =============
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -359,7 +321,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     public void roomSelector(View view) {
         // Create list of rooms
 
-
         List<String> rooms = new ArrayList<>();
 
         for (Room room : mApiService.getRooms()) {
@@ -367,31 +328,35 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         }
         CharSequence[] cs = rooms.toArray(new CharSequence[0]);
 
-        AlertDialog.Builder mbuilder = new AlertDialog.Builder(this);
-        mbuilder.setTitle("Sélectionner une salle"); // Set title of AlertDialog
-        mbuilder.setIcon(R.drawable.icon);
-        mbuilder.setSingleChoiceItems( cs, -1, new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sélectionner une salle"); // Set title of AlertDialog
+        builder.setIcon(R.drawable.icon);
+        builder.setSingleChoiceItems( cs, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                String roomSelected = rooms.get(i);
+                buttonRoom.setText(roomSelected);
+                room = mApiService.getRooms().get(i);
             }
         });
+
         // Set neutral cancel button
-        mbuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
         });
 
-        mbuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
         });
 
-        AlertDialog mDialog = mbuilder.create();
-        mDialog.show();
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
     // ======== End Toast Spinner Room end ===========
