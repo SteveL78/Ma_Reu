@@ -23,7 +23,6 @@ import lamzone.com.R;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -50,15 +49,8 @@ public class MainActivityTest {
     public void mainActivityTest() {
 
         // On clique sur le FAB pour créer une nouvelle réunion
-        ViewInteraction floatingActionButton = onView(
-                allOf(withId(R.id.fab_btn),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        floatingActionButton.perform(click());
+        onView(withId(R.id.fab_btn)).perform(click());
+
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -70,15 +62,9 @@ public class MainActivityTest {
         }
 
         // On indique le sujet de la réunion
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.meeting_subject_editText),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                0)));
-        appCompatEditText.perform(scrollTo(), replaceText("Communication"), closeSoftKeyboard());
+        onView(withId(R.id.meeting_subject_editText)).perform(replaceText("Communication"), closeSoftKeyboard());
 
+        
         // On clique pour définir la date de début
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.select_date_btn),
@@ -89,17 +75,6 @@ public class MainActivityTest {
                                 1)));
         appCompatButton.perform(scrollTo(), click());
 
-        // On sélectionne un autre mois...
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Next month"),
-                        childAtPosition(
-                                allOf(withClassName(is("android.widget.DayPickerView")),
-                                        childAtPosition(
-                                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
-                                                0)),
-                                2),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
 
         // ... et on sélectionne l'heure de début ...
         ViewInteraction appCompatButton2 = onView(
@@ -170,139 +145,29 @@ public class MainActivityTest {
                                 3)));
         appCompatButton7.perform(scrollTo(), click());
 
-/*        // On sélectionne les participants donc on tape la lettre C pour Charles ...
-        ViewInteraction appCompatMultiAutoCompleteTextView = onView(
-                allOf(withId(R.id.multiautocompletetextview),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        4),
-                                1)));
-        appCompatMultiAutoCompleteTextView.perform(scrollTo(), replaceText("c"), closeSoftKeyboard());
 
-        DataInteraction appCompatTextView = onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(0);
-        appCompatTextView.perform(click());*/
-
-
-
-
+        // On sélectionne les participants dans multiautocompletetexview
         onView(withId(R.id.multiautocompletetextview)).perform(click());
         onView(withId(R.id.multiautocompletetextview)).perform(clearText(), typeText("c"));
         onView(withText("Charles")).inRoot(RootMatchers.isPlatformPopup()).perform(click());
 
-
         onView(withId(R.id.multiautocompletetextview)).perform(click());
         onView(withId(R.id.multiautocompletetextview)).perform(typeText("c"));
         onView(withText("Cassandra")).inRoot(RootMatchers.isPlatformPopup()).perform(click());
+        onView(withId(R.id.multiautocompletetextview)).perform(closeSoftKeyboard());
 
 
+        // On clique sur enregistrer pour finaliser la crétion de la réunion
+        onView(withId(R.id.save_btn)).perform(click());
 
 
+        //Vérifier que la réunion
 
-
-
-
-
-
-
-
-
-
-/*        onView(withId(R.id.multiautocompletetextview))
-                .perform(typeText("c"));
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(700);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        onData(anything())
-                .atPosition(0)
-                .perform(click());
-
-        onView(withId(R.id.multiautocompletetextview))
-                .perform(typeText("c"));
-        onData(anything()).atPosition(1).perform(click());*/
-
-
-
-       /* // ... on le sélectionne dans la liste ...
-        ViewInteraction appCompatMultiAutoCompleteTextView2 = onView(
-                allOf(withId(R.id.multiautocompletetextview), withText("Charles, "),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        4),
-                                1)));
-        appCompatMultiAutoCompleteTextView2.perform(scrollTo(), replaceText("Charles, c"));
-
-        // ... puis on clique de nouveau sur C pour Cassandra ...
-        ViewInteraction appCompatMultiAutoCompleteTextView3 = onView(
-                allOf(withId(R.id.multiautocompletetextview), withText("Charles, c"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        4),
-                                1),
-                        isDisplayed()));
-        appCompatMultiAutoCompleteTextView3.perform(closeSoftKeyboard());
-
-        DataInteraction appCompatTextView2 = onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(1);
-        appCompatTextView2.perform(click());
-
-        // Charles et Cassandra sont ajoutés à la liste
-        ViewInteraction appCompatMultiAutoCompleteTextView4 = onView(
-                allOf(withId(R.id.multiautocompletetextview), withText("Charles, Cassandra, "),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        4),
-                                1)));
-        appCompatMultiAutoCompleteTextView4.perform(scrollTo(), replaceText("Charles, Cassandra, s"));
-
-        ViewInteraction appCompatMultiAutoCompleteTextView5 = onView(
-                allOf(withId(R.id.multiautocompletetextview), withText("Charles, Cassandra, s"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        4),
-                                1),
-                        isDisplayed()));
-        appCompatMultiAutoCompleteTextView5.perform(closeSoftKeyboard());
-
-        DataInteraction appCompatTextView3 = onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(1);
-        appCompatTextView3.perform(click());*/
-
-        // On clique sur enregistrer pour finaliser la crétion de la réunion
-        ViewInteraction appCompatButton8 = onView(
-                allOf(withId(R.id.save_btn), withText("Enregistrer"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                6)));
-        appCompatButton8.perform(scrollTo(), click());
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-/*        try {
             Thread.sleep(700);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -392,7 +257,7 @@ public class MainActivityTest {
                         isDisplayed()));
         appCompatTextView5.perform(click());
 
-        ViewInteraction appCompatImageButton2 = onView(
+        /*ViewInteraction appCompatImageButton2 = onView(
                 allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Next month"),
                         childAtPosition(
                                 allOf(withClassName(is("android.widget.DayPickerView")),
@@ -401,7 +266,7 @@ public class MainActivityTest {
                                                 0)),
                                 2),
                         isDisplayed()));
-        appCompatImageButton2.perform(click());
+        appCompatImageButton2.perform(click());*/
 
         ViewInteraction appCompatButton10 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
@@ -448,7 +313,7 @@ public class MainActivityTest {
                                         0),
                                 0),
                         isDisplayed()));
-        appCompatTextView6.perform(click());*/
+        appCompatTextView6.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
