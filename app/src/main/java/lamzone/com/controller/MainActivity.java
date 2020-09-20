@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -24,7 +23,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -36,7 +34,6 @@ import lamzone.com.events.OpenMeetingEvent;
 import lamzone.com.model.Meeting;
 import lamzone.com.model.Room;
 import lamzone.com.service.MeetingApiService;
-import lamzone.com.service.RoomGenerator;
 import lamzone.com.ui.DatePickerFragment;
 import lamzone.com.ui.MyMeetingRecyclerViewAdapter;
 

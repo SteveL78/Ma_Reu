@@ -13,9 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -31,7 +29,6 @@ import lamzone.com.model.Meeting;
 import lamzone.com.model.Participant;
 import lamzone.com.model.Room;
 import lamzone.com.service.MeetingApiService;
-import lamzone.com.service.RoomGenerator;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 

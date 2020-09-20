@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import lamzone.com.model.Participant;
-import lamzone.com.model.Room;
 
 /**
  * Created by Steve LEROY on 12/04/2020.

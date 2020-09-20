@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Locale;
 
 import lamzone.com.model.Meeting;
-import lamzone.com.model.Participant;
-import lamzone.com.model.Room;
 
 
 /**

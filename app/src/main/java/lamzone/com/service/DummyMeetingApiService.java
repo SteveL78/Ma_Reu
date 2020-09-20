@@ -7,10 +7,7 @@ package lamzone.com.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
-import javax.xml.transform.Result;
 
 import lamzone.com.model.Meeting;
 import lamzone.com.model.Participant;

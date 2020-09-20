@@ -3,14 +3,11 @@ package lamzone.com.ui;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
-import java.util.Objects;
 
 /**
  * Created by Steve LEROY on 04/07/2020.
