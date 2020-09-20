@@ -64,16 +64,9 @@ public class MainActivityTest {
         // On indique le sujet de la réunion
         onView(withId(R.id.meeting_subject_editText)).perform(replaceText("Communication"), closeSoftKeyboard());
 
-        
+
         // On clique pour définir la date de début
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.select_date_btn),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        1),
-                                1)));
-        appCompatButton.perform(scrollTo(), click());
+        onView(withId(R.id.select_date_btn)).perform(click());
 
 
         // ... et on sélectionne l'heure de début ...
@@ -116,15 +109,10 @@ public class MainActivityTest {
                                 3)));
         appCompatButton5.perform(scrollTo(), click());
 
+
         // On clique pour sélectionner la salle ...
-        ViewInteraction appCompatButton6 = onView(
-                allOf(withId(R.id.room_btn),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        3),
-                                1)));
-        appCompatButton6.perform(scrollTo(), click());
+        onView(withId(R.id.room_btn)).perform(click());
+
 
         // .. on sélectionne la 10ème salle (donc à la position 9) ...
         DataInteraction appCompatCheckedTextView = onData(anything())
@@ -192,6 +180,7 @@ public class MainActivityTest {
             e.printStackTrace();
         }
 
+
         ViewInteraction appCompatTextView4 = onView(
                 allOf(withId(R.id.title), withText("par salle"),
                         childAtPosition(
@@ -257,16 +246,6 @@ public class MainActivityTest {
                         isDisplayed()));
         appCompatTextView5.perform(click());
 
-        /*ViewInteraction appCompatImageButton2 = onView(
-                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Next month"),
-                        childAtPosition(
-                                allOf(withClassName(is("android.widget.DayPickerView")),
-                                        childAtPosition(
-                                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
-                                                0)),
-                                2),
-                        isDisplayed()));
-        appCompatImageButton2.perform(click());*/
 
         ViewInteraction appCompatButton10 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
