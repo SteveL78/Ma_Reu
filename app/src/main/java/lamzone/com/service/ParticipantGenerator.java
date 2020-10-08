@@ -26,7 +26,9 @@ public class ParticipantGenerator {
 
 
     // Génère une liste à partir des salles créées
-    static List<Participant> generateParticipants() { return new ArrayList<>(DUMMY_PARTICIPANTS); }
+    static List<Participant> generateParticipants() {
+        return new ArrayList<>(DUMMY_PARTICIPANTS);
+    }
 
 }
 

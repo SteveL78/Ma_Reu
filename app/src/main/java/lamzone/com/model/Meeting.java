@@ -24,6 +24,7 @@ public class Meeting implements Serializable {
     private List<Participant> participants; // email des particpants
 
     private boolean isMeetingInFilterList; // boolean pour liste filtrée (ou liste complète)
+
     /**
      * Constructor
      *
@@ -31,7 +32,7 @@ public class Meeting implements Serializable {
      * @param subject
      * @param room
      */
-    public Meeting (long id, String subject, Date startTime, Date endTime, Room room, List<Participant> participants) {
+    public Meeting(long id, String subject, Date startTime, Date endTime, Room room, List<Participant> participants) {
         this.id = id;
         this.subject = subject;
         this.startTime = startTime;
@@ -44,33 +45,54 @@ public class Meeting implements Serializable {
     }
 
 
-    public long getId() { return id; }
+    public long getId() {
+        return id;
+    }
 
-    public void setId(long id) { this.id = id; }
+    public void setId(long id) {
+        this.id = id;
+    }
 
 
+    public String getSubject() {
+        return subject;
+    }
 
-    public String getSubject() { return subject; }
-    public void setSubject (String subject) { this.subject = subject; }
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
 
-    public Date getStartTime() { return startTime; }
+    public Date getStartTime() {
+        return startTime;
+    }
+
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
 
-    public Date getEndTime() { return startTime; }
-    public void setEndTime(Date endTime) { this.endTime = endTime; }
+    public Date getEndTime() {
+        return startTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 
 
-    public Room getRoom() { return room; }
+    public Room getRoom() {
+        return room;
+    }
+
     public void setRoom(Room room) {
         this.room = room;
     }
 
 
-    public List<Participant> getParticipants() { return participants; }
+    public List<Participant> getParticipants() {
+        return participants;
+    }
 
 
     public boolean isMeetingInFilterList() {

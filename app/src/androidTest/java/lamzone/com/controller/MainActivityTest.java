@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import lamzone.com.R;
+import lamzone.com.utils.TestUtils;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
@@ -50,7 +51,6 @@ public class MainActivityTest {
         onView(withId(R.id.meeting_subject_editText)).perform(replaceText("Communication"), closeSoftKeyboard());
 
 
-
         // On clique pour définir la date de début
         onView(withId(R.id.select_date_btn)).perform(click());
 
@@ -61,7 +61,6 @@ public class MainActivityTest {
         onView(withText("OK")).perform(click());
 
 
-
         // On clique sur le bouton pour définir l'heure de fin...
         onView(withId(R.id.select_end_btn)).perform(click());
 
@@ -69,12 +68,10 @@ public class MainActivityTest {
         onView(withText("OK")).perform(click());
 
 
-
         // On sélectionne la salle Funky Kong...
         onView(withId(R.id.room_btn)).perform(click());
         onView(withText("Funky Kong")).perform(click());
         onView(withText("OK")).perform(click());
-
 
 
         // On sélectionne les participants dans multiautocompletetextview
@@ -88,10 +85,8 @@ public class MainActivityTest {
         onView(withId(R.id.multiautocompletetextview)).perform(closeSoftKeyboard());
 
 
-
         // On clique sur enregistrer pour finaliser la création de la réunion
         onView(withId(R.id.save_btn)).perform(click());
-
 
 
         // Added a sleep statement to match the app's execution delay.
@@ -110,7 +105,7 @@ public class MainActivityTest {
         onView(withText("OK")).perform(click());
 
         //... et on vérifie que la liste contient bien une réunion avec pour objet "Communication"
-        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(1, R.id.item_list_object))
+        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
                 .check(matches(withText("Communication")));
 
         // Added a sleep statement to match the app's execution delay.
@@ -131,7 +126,6 @@ public class MainActivityTest {
                 .check(matches(withText("Communication")));
 
 
-
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
@@ -147,24 +141,19 @@ public class MainActivityTest {
         onView(withText("Réinitialiser les filtres")).perform(click());
 
 
-        // ------ SUPPRIMER LA REUNION CREEE ------
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-       try {
+        try {
             Thread.sleep(250);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+        // ------ SUPPRIMER LA REUNION CREEE ------
 
-        /*onView(withId(R.id.meetings_list_recyclerView))
-                .check(matches(hasDescendant(withText("Communication"))));*/
-                /*
         onView(withId(R.id.meetings_list_recyclerView))
-                .perform(RecyclerViewActions.scrollToPosition((LAST_POSITION)));*/
-
-
+                .perform(TestUtils.actionOnItemViewAtPosition(0, R.id.item_list_delete_button, click()));
 
     }
 

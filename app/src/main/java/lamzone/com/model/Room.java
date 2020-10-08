@@ -23,7 +23,7 @@ public class Room implements Serializable {
      * Constructor
      */
 
-    public int getId () {
+    public int getId() {
         return id;
     }
 

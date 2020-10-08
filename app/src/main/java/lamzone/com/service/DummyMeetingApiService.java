@@ -31,10 +31,16 @@ public class DummyMeetingApiService implements MeetingApiService {
     public List<Meeting> getMeetings() {
         return meetings;
     }
+
     @Override
-    public List<Room> getRooms() {return rooms;}
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
     @Override
-    public List<Participant> getParticipants() {return participants;}
+    public List<Participant> getParticipants() {
+        return participants;
+    }
 
 
     /**
@@ -46,13 +52,10 @@ public class DummyMeetingApiService implements MeetingApiService {
     }
 
 
-
-
     @Override
-    public void addMeeting (Meeting meeting) {
-        meetings.add(meeting);
-        }    // Ajouter un meeting
-
+    public void addMeeting(Meeting meeting) {
+        meetings.set(0, meeting);
+    }    // Ajouter un meeting
 
 
     // On récupère la date sélectionnée par le DatePicker
@@ -64,14 +67,14 @@ public class DummyMeetingApiService implements MeetingApiService {
 
         // On le compare à notre liste
         List<Meeting> result = new ArrayList<Meeting>();
-        for (Meeting m : meetings ){
+        for (Meeting m : meetings) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(m.getStartTime());
             int meetingYear = cal.get(Calendar.YEAR);
             int meetingMonth = cal.get(Calendar.MONTH);
             int meetingDayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
 
-            if(meetingYear == year && meetingMonth == month && meetingDayOfMonth == dayOfMonth){
+            if (meetingYear == year && meetingMonth == month && meetingDayOfMonth == dayOfMonth) {
                 result.add(m);
             }
         }
@@ -83,10 +86,10 @@ public class DummyMeetingApiService implements MeetingApiService {
     public List<Meeting> filterMeetingListForRoom(String room) {
         // Récupérer la liste de réunions par salle
         List<Meeting> result = new ArrayList<>();
-        for (Meeting m : meetings){
+        for (Meeting m : meetings) {
             String nameRoom = m.getRoom().getName();
 
-            if(nameRoom.equals(room)){
+            if (nameRoom.equals(room)) {
                 result.add(m);
             }
         }
@@ -94,7 +97,6 @@ public class DummyMeetingApiService implements MeetingApiService {
         // l'afficher
         return result;
     }
-
 
 
 }

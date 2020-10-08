@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private RecyclerView rv;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         return true;
     }
 
+
     /**
      * Set option menu
      *
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         AlertDialog.Builder mbuilder = new AlertDialog.Builder(this);
         mbuilder.setTitle("Sélectionner une salle"); // Set title of AlertDialog
         mbuilder.setIcon(R.drawable.icon);
-        mbuilder.setSingleChoiceItems( cs, -1, new DialogInterface.OnClickListener() {
+        mbuilder.setSingleChoiceItems(cs, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String roomSelected = rooms.get(i);
@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
 
-        mbuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+        mbuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
             }
@@ -209,10 +209,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         mDialog.show();
 
     }
-
-
-
-
 
 
     /**
@@ -239,6 +235,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         adapter.notifyDataSetChanged(); // Refresh
 
     }
+
 
     /**
      * Filter by room

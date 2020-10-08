@@ -28,6 +28,8 @@ public class RoomGenerator {
 
 
     // Génère une liste à partir des salles créées
-    public static List<Room> generateRooms() { return new ArrayList<>(DUMMY_ROOMS); }
+    public static List<Room> generateRooms() {
+        return new ArrayList<>(DUMMY_ROOMS);
+    }
 
 }

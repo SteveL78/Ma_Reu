@@ -16,14 +16,18 @@ public interface MeetingApiService {
 
     /**
      * Get all my Meetings
+     *
      * @return {@link List}
      */
     List<Meeting> getMeetings();   // renvoie meeting
+
     List<Room> getRooms();
+
     List<Participant> getParticipants();
 
     /**
      * Deletes a meeting
+     *
      * @param meeting
      */
     void deleteMeeting(Meeting meeting);  // supprime le meeting

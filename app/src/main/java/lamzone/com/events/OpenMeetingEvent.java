@@ -19,8 +19,11 @@ public class OpenMeetingEvent {
 
     /**
      * Constructor
+     *
      * @param meeting
      */
-    public OpenMeetingEvent(Meeting meeting) {this.meeting = meeting; }
+    public OpenMeetingEvent(Meeting meeting) {
+        this.meeting = meeting;
+    }
 
 }

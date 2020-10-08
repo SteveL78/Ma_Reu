@@ -16,13 +16,16 @@ public class DeleteMeetingEvent {
 
     /**
      * Constructor.
+     *
      * @param meeting
      */
-    public DeleteMeetingEvent (Meeting meeting) {
+    public DeleteMeetingEvent(Meeting meeting) {
         this.meeting = meeting;
     }
 
-    public Meeting getMeeting() { return meeting; }
+    public Meeting getMeeting() {
+        return meeting;
+    }
 
 
 }

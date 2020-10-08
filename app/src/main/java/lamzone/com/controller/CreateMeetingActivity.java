@@ -281,7 +281,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         ArrayList<Participant> participantList = new ArrayList<>();
         for (Participant p : mApiService.getParticipants()) {
             if (participantNameList.contains(p.getName())) {
-                participantList.add(p);
+                participantList.add(0, p);
             }
 
         }
@@ -328,7 +328,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Sélectionner une salle"); // Set title of AlertDialog
         builder.setIcon(R.drawable.icon);
-        builder.setSingleChoiceItems( cs, -1, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(cs, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String roomSelected = rooms.get(i);
@@ -345,7 +345,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -357,7 +357,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     }
     // ======== End Toast Spinner Room end ===========
-
 
 }
 
