@@ -161,6 +161,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     // ============= VERIFICATION DES CHAMPS LORS DE L'ENREGISTREMENT  =============
 
+    //TODO FACTORISER LE CODE ?
+
     private void onCreateMeetingClicked() {
 
         String meetingSubject = mMeetingSubjectTv.getText().toString();
@@ -171,7 +173,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         if (meetingSubject.isEmpty()) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
-            myPopUp.setMessage(R.string.specify_subject);
+            myPopUp.setMessage(R.string.error_specify_subject);
             myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
@@ -184,7 +186,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         if (calendarStart == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
-            myPopUp.setMessage(R.string.specify_start_time);
+            myPopUp.setMessage(R.string.error_specify_start_time);
             myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
@@ -197,7 +199,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         if (calendarEnd == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
-            myPopUp.setMessage(R.string.specify_end_time);
+            myPopUp.setMessage(R.string.error_specify_end_time);
             myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
@@ -213,7 +215,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         if (startDate.after(endDate)) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
-            myPopUp.setMessage(R.string.please_modify_end_time);
+            myPopUp.setMessage(R.string.error_please_select_room);
             myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
@@ -226,7 +228,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         if (room == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
-            myPopUp.setMessage(R.string.please_select_room);
+            myPopUp.setMessage(R.string.error_please_select_room);
             myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
@@ -248,7 +250,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         if (participantNameList.isEmpty()) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
-            myPopUp.setMessage(R.string.please_insert_participant);
+            myPopUp.setMessage(R.string.error_please_insert_participant);
             myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
@@ -268,7 +270,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         if (!roomIsFree) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
-            myPopUp.setMessage(R.string.room_unavalaible);
+            myPopUp.setMessage(R.string.error_room_unavailable);
             myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });

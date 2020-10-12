@@ -82,7 +82,7 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(holder.mDeleteButton.getContext(), R.string.deleted_meeting, Toast.LENGTH_SHORT).show();
+                Toast.makeText(holder.mDeleteButton.getContext(), R.string.toast_deleted_meeting, Toast.LENGTH_SHORT).show();
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
             }
         });
