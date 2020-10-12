@@ -12,7 +12,7 @@ import lamzone.com.model.Participant;
 public class ParticipantGenerator {
 
 
-    //Création de la liste des salles avec les informations devant s'afficher pour chacune
+    //Création de la liste des participants avec les informations devant s'afficher pour chacuns
     public static List<Participant> DUMMY_PARTICIPANTS = Arrays.asList(
             new Participant(41, "Charles", "charles@lamzone.com"),
             new Participant(213, "Steve", "steve@lamzone.com"),
@@ -25,7 +25,7 @@ public class ParticipantGenerator {
     );
 
 
-    // Génère une liste à partir des salles créées
+    // Génère une liste à partir des participants créés
     static List<Participant> generateParticipants() {
         return new ArrayList<>(DUMMY_PARTICIPANTS);
     }

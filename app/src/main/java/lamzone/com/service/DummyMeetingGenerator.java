@@ -17,7 +17,7 @@ import lamzone.com.model.Meeting;
  */
 public abstract class DummyMeetingGenerator {
 
-    // Création de la liste des voisins avec informations devant s'afficher dans sa fiche
+    // Création de la liste des réunions avec informations
     public static List<Meeting> DUMMY_MEETINGS = Arrays.asList(
             new Meeting(791, "Réunion A", getDate("15/01/2020 12:55"), getDate("10/05/2020 13:55"), RoomGenerator.DUMMY_ROOMS.get(0), ParticipantGenerator.DUMMY_PARTICIPANTS),
             new Meeting(226, "Réunion B", getDate("15/01/2020 08:00"), getDate("10/05/2020 08:30"), RoomGenerator.DUMMY_ROOMS.get(0), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(0))),
@@ -43,7 +43,7 @@ public abstract class DummyMeetingGenerator {
         return new Date();
     }
 
-    // Génère une liste à partir des voisins créés
+    // Génère une liste à partir des réunions créées
     static List<Meeting> generateMeetings() {
         return new ArrayList<>(DUMMY_MEETINGS);
     }

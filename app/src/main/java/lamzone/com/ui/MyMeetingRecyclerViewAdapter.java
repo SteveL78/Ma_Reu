@@ -21,7 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lamzone.com.R;
 import lamzone.com.events.DeleteMeetingEvent;
-import lamzone.com.events.OpenMeetingEvent;
 import lamzone.com.model.Meeting;
 import lamzone.com.model.Participant;
 
