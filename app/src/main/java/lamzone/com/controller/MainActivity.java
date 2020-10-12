@@ -140,19 +140,19 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.reset:
-                Toast.makeText(this, "Menu Réinitialiser les réunions sélectionné", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.menu_reset_meetings, Toast.LENGTH_LONG).show();
                 List<Meeting> meetingsReset = mApiService.getMeetings();
                 adapter.setData(meetingsReset);
                 adapter.notifyDataSetChanged(); // Refresh
                 return true;
 
             case R.id.filter_by_date:
-                Toast.makeText(this, "Menu Filtrer par date sélectionné", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.menu_filter_by_date, Toast.LENGTH_SHORT).show();
                 showDateDialog();
                 return true;
 
             case R.id.filter_by_room:
-                Toast.makeText(this, "Menu Filtrer par salle sélectionné", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.menu_filter_by_room, Toast.LENGTH_SHORT).show();
                 roomSelector();
 
                 mApiService.getMeetings();
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         CharSequence[] cs = rooms.toArray(new CharSequence[0]);
 
         AlertDialog.Builder mbuilder = new AlertDialog.Builder(this);
-        mbuilder.setTitle("Sélectionner une salle"); // Set title of AlertDialog
+        mbuilder.setTitle(R.string.alertDialog_select_a_room); // Set title of AlertDialog
         mbuilder.setIcon(R.drawable.icon);
         mbuilder.setSingleChoiceItems(cs, -1, new DialogInterface.OnClickListener() {
             @Override
@@ -192,14 +192,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         });
         // Set neutral cancel button
-        mbuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        mbuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
         });
 
-        mbuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        mbuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
             }

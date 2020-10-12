@@ -18,8 +18,26 @@
 
 
 
-    <string name="filtrer">Filtrer</string>
+    <string name="filter">Filtrer</string>
     <string name="tv_email">maxime@lamzone.com</string>
     <string name="reinitialiser_les_filtres">Réinitialiser les filtres</string>
+    <string name="filter_by_date">par date</string>
+    <string name="filter_by_room">par salle</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_room">Sélectionner une salle</string>
+    <string name="warning">ATTENTION</string>
+    <string name="please_insert_participant">Merci d\'indiquer au moins un participant.</string>
+    <string name="please_select_room">Vous devez sélectionner une salle de réunion.</string>
+    <string name="room_unavalaible">Cette salle n\'est plus disponible.</string>
+    <string name="specify_end_time">Merci de préciser l\'heure de fin de la réunion.</string>
+    <string name="specify_start_time">Veillez à bien indiquer une date et une heure de début.</string>
+    <string name="please_modify_end_time">Merci de modifier l\'heure de fin de réunion qui ne peut être antérieure à l\'heure de début.</string>
+    <string name="specify_subject">Merci d\'indiquer le sujet de la réunion.</string>
+    <string name="deleted_meeting">Réunion supprimée</string>
+    <string name="menu_reset_meetings">Menu Réinitialiser les réunions sélectionné</string>
+    <string name="menu_filter_by_date">Menu Filtrer par date sélectionné</string>
+    <string name="menu_filter_by_room">Menu Filtrer par salle sélectionné</string>
+    <string name="alertDialog_select_a_room">Sélectionner une salle</string>
 
 </resources>

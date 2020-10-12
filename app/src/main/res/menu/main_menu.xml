@@ -16,12 +16,12 @@
         <item
             android:id="@+id/filter_by_date"
             android:checkable="false"
-            android:title="par date" />
+            android:title="@string/filter_by_date" />
 
         <item
             android:id="@+id/filter_by_room"
             android:checkable="false"
-            android:title="par salle">
+            android:title="@string/filter_by_room">
 
         </item>
 

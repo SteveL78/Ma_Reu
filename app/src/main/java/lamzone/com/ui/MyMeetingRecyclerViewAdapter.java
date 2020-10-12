@@ -83,20 +83,11 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(holder.mDeleteButton.getContext(), "Réunion supprimée", Toast.LENGTH_SHORT).show();
+                Toast.makeText(holder.mDeleteButton.getContext(), R.string.deleted_meeting, Toast.LENGTH_SHORT).show();
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
-
             }
         });
 
-        // Quand je clique sur toute la vue voilà ce qu'il se passe
-        holder.mParentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast.makeText(holder.mDeleteButton.getContext(), "click", Toast.LENGTH_SHORT).show();
-                EventBus.getDefault().post(new OpenMeetingEvent(meeting)); // ouvre le meeting
-            }
-        });
     }
 
     // ============= RECYCLERVIEW : ON RECUPERE LE NOMBRE D'ELEMENTS =============

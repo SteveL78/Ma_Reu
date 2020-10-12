@@ -170,9 +170,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         // On vérifie que l'utilisateur a bien indiqué un sujet de réunion
         if (meetingSubject.isEmpty()) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
-            myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Merci d'indiquer le sujet de la réunion.");
-            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+            myPopUp.setTitle(R.string.warning);
+            myPopUp.setMessage(R.string.specify_subject);
+            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
@@ -183,9 +183,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         // On vérifie que l'utilisateur a bien indiqué une date et une heure de début de réunion
         if (calendarStart == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
-            myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Veillez à bien indiquer une date et une heure de début.");
-            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+            myPopUp.setTitle(R.string.warning);
+            myPopUp.setMessage(R.string.specify_start_time);
+            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
@@ -196,9 +196,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         // On vérifie que l'utilisateur a bien indiqué une heure de fin de réunion
         if (calendarEnd == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
-            myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Merci de préciser l'heure de fin de la réunion.");
-            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+            myPopUp.setTitle(R.string.warning);
+            myPopUp.setMessage(R.string.specify_end_time);
+            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
@@ -212,9 +212,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         // On vérifie que la date de fin n'est pas antérieure à la date de début
         if (startDate.after(endDate)) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
-            myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Merci de modifier l'heure de fin de réunion qui ne peut être antérieure à l'heure de début.");
-            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+            myPopUp.setTitle(R.string.warning);
+            myPopUp.setMessage(R.string.please_modify_end_time);
+            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
@@ -225,9 +225,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         // On vérifie que l'utilisateur a bien sélectionné une salle de réunion
         if (room == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
-            myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Vous devez sélectionner une salle de réunion.");
-            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+            myPopUp.setTitle(R.string.warning);
+            myPopUp.setMessage(R.string.please_select_room);
+            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
@@ -247,9 +247,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         }
         if (participantNameList.isEmpty()) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
-            myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Merci d'indiquer au moins un participant.");
-            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+            myPopUp.setTitle(R.string.warning);
+            myPopUp.setMessage(R.string.please_insert_participant);
+            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
@@ -267,9 +267,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         }
         if (!roomIsFree) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
-            myPopUp.setTitle("ATTENTION");
-            myPopUp.setMessage("Cette salle n'est plus disponible.");
-            myPopUp.setPositiveButton("OK", (dialogInterface, i) -> {
+            myPopUp.setTitle(R.string.warning);
+            myPopUp.setMessage(R.string.room_unavalaible);
+            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
                 // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
             });
             myPopUp.create().show();
@@ -326,7 +326,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         CharSequence[] cs = rooms.toArray(new CharSequence[0]);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Sélectionner une salle"); // Set title of AlertDialog
+        builder.setTitle(R.string.select_room); // Set title of AlertDialog
         builder.setIcon(R.drawable.icon);
         builder.setSingleChoiceItems(cs, -1, new DialogInterface.OnClickListener() {
             @Override
@@ -338,14 +338,14 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
 
         // Set neutral cancel button
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
         });
 
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
