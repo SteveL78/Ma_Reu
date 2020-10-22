@@ -4,25 +4,23 @@
     <string name="select_item">Trier</string>
     <string name="filter_item">Filtrer</string>
     <string name="create_meeting_title">Créez votre réunion</string>
-    <string name="choose_subject_hint">Indiquez le sujet de la réunion</string>
-    <string name="tv_start_meeting">Elle débute quand ?</string>
-    <string name="start_btn">Cliquer ici</string>
-    <string name="tv_end_meeting">Elle se termine quand ?</string>
-    <string name="end_btn">Cliquer ici</string>
-    <string name="tv_select_room">Dans quelle salle ?</string>
-    <string name="select_participants_tv">Avec qui ?</string>
-    <string name="tv_select_participant">Tapez les prénoms des participants</string>
-    <string name="save_btn">Enregistrer</string>
-
-
-
+    <string name="create_activity_choose_subject_hint">Indiquez le sujet de la réunion</string>
+    <string name="create_activity_tv_start_meeting">Elle débute quand ?</string>
+    <string name="create_activity_start_btn">Cliquer ici</string>
+    <string name="create_activity_tv_end_meeting">Elle se termine quand ?</string>
+    <string name="create_activity_end_btn">Cliquer ici</string>
+    <string name="create_activity_tv_select_room">Dans quelle salle ?</string>
+    <string name="create_activity_select_room_btn">Cliquer ici</string>
+    <string name="create_activity_select_participants_tv">Avec qui ?</string>
+    <string name="create_activity_enter_participant">Tapez les prénoms des participants</string>
+    <string name="create_activity_save_btn">Enregistrer</string>
 
 
     <string name="menu_filter">Filtrer</string>
     <string name="tv_email">maxime@lamzone.com</string>
-    <string name="reset_filters">Réinitialiser les filtres</string>
-    <string name="filter_by_date">par date</string>
-    <string name="filter_by_room">par salle</string>
+    <string name="main_menu_reset_filters">Réinitialiser les filtres</string>
+    <string name="main_menu_filter_by_date">par date</string>
+    <string name="main_menu_filter_by_room">par salle</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="select_room">Sélectionner une salle</string>

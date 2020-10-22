@@ -21,7 +21,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="20dp"
-            android:hint="@string/choose_subject_hint"
+            android:hint="@string/create_activity_choose_subject_hint"
             android:textSize="18sp"
             android:inputType="text"/>
 
@@ -40,7 +40,7 @@
                  android:layout_height="wrap_content"
                  android:layout_marginStart="16dp"
                  android:layout_marginEnd="16dp"
-                 android:text="@string/tv_start_meeting"
+                 android:text="@string/create_activity_tv_start_meeting"
                  android:textColor="@color/design_default_color_primary_dark"
                  android:textSize="20sp"
                  android:textStyle="bold" />
@@ -52,7 +52,7 @@
                  android:paddingRight="35dp"
                  android:paddingLeft="35dp"
                  android:layout_gravity="center_horizontal"
-                 android:hint="@string/start_btn"
+                 android:hint="@string/create_activity_start_btn"
                  android:textSize="18sp" />
 
         </LinearLayout>
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/tv_end_meeting"
+                android:text="@string/create_activity_tv_end_meeting"
                 android:textColor="@color/design_default_color_primary_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -86,7 +86,7 @@
                 android:paddingRight="35dp"
                 android:paddingLeft="35dp"
                 android:layout_gravity="center_horizontal"
-                android:hint="@string/end_btn"
+                android:hint="@string/create_activity_end_btn"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/tv_select_room"
+                android:text="@string/create_activity_tv_select_room"
                 android:textColor="@color/design_default_color_primary_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -121,7 +121,7 @@
                 android:paddingRight="35dp"
                 android:paddingLeft="35dp"
                 android:layout_gravity="center_horizontal"
-                android:hint="@string/end_btn"
+                android:hint="@string/create_activity_select_room_btn"
                 android:textSize="18sp"
                 android:onClick="roomSelector">
             </Button>
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/select_participants_tv"
+                android:text="@string/create_activity_select_participants_tv"
                 android:textColor="@color/design_default_color_primary_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -152,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/tv_select_participant"
+                android:hint="@string/create_activity_enter_participant"
                 android:textColor="@color/design_default_color_primary_dark"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -188,10 +188,6 @@
 
 
 
-
-
-
-
         <Button
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
@@ -200,7 +196,7 @@
             android:background="@color/design_default_color_primary_dark"
             android:padding="15dp"
             android:layout_marginTop="50dp"
-            android:text="@string/save_btn"
+            android:text="@string/create_activity_save_btn"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:onClick="onCreateMeetingClicked"/>

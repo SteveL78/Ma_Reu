@@ -45,10 +45,12 @@ public class DummyMeetingApiService implements MeetingApiService {
 
     /**
      * {@inheritDoc}
+     * @return
      */
     @Override
-    public void deleteMeeting(Meeting meeting) {
+    public List<Meeting> deleteMeeting(Meeting meeting) {
         meetings.remove(meeting);                               // supprime un meeting
+        return null;
     }
 
 

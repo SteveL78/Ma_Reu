@@ -29,8 +29,9 @@ public interface MeetingApiService {
      * Deletes a meeting
      *
      * @param meeting
+     * @return
      */
-    void deleteMeeting(Meeting meeting);  // supprime le meeting
+    List<Meeting> deleteMeeting(Meeting meeting);  // supprime le meeting
 
 
     /**

@@ -10,18 +10,18 @@
         <item
             android:id="@+id/reset"
             android:checkable="false"
-            android:title="@string/reset_filters" />
+            android:title="@string/main_menu_reset_filters" />
 
 
         <item
             android:id="@+id/filter_by_date"
             android:checkable="false"
-            android:title="@string/filter_by_date" />
+            android:title="@string/main_menu_filter_by_date" />
 
         <item
             android:id="@+id/filter_by_room"
             android:checkable="false"
-            android:title="@string/filter_by_room">
+            android:title="@string/main_menu_filter_by_room">
 
         </item>
 

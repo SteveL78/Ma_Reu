@@ -1,28 +1,21 @@
 package lamzone.com.controller;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import lamzone.com.R;
 import lamzone.com.di.DI;
 import lamzone.com.model.Meeting;
@@ -30,25 +23,17 @@ import lamzone.com.model.Participant;
 import lamzone.com.model.Room;
 import lamzone.com.service.MeetingApiService;
 
-public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CreateMeetingActivity extends AppCompatActivity {
 
     private MeetingApiService mApiService = DI.getMeetingApiService();
-
-
     private EditText mMeetingSubjectTv;
-
     private Button mStartDateBtn;
-
     private Button mEndDateBtn;
-
     private Button buttonRoom;
-
     private MultiAutoCompleteTextView multiAutoCompleteTextView;
 
     private Calendar calendarStart = null;
-
     private Calendar calendarEnd = null;
-
     private Room room = null;
 
 
@@ -61,11 +46,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mStartDateBtn = findViewById(R.id.select_date_btn);
         mEndDateBtn = findViewById(R.id.select_end_btn);
         buttonRoom = findViewById(R.id.room_btn);
-        Button saveBtn = findViewById(R.id.save_btn);
 
         multiAutoCompleteTextView = findViewById(R.id.multiautocompletetextview);
-
-        saveBtn.setOnClickListener(view -> onCreateMeetingClicked());
 
         mApiService = DI.getMeetingApiService();
         mApiService.getRooms();
@@ -139,7 +121,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
 
     // =========== SUITE TIMEPICKER ================
-
     private void showTimeDialogEnd(final Button mEndDateBtn) {             // SUITE TIMEPICKER
 
         TimePickerDialog.OnTimeSetListener timeSetListener = (timePicker, hourOfDay, minute) -> {
@@ -160,49 +141,36 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
 
     // ============= VERIFICATION DES CHAMPS LORS DE L'ENREGISTREMENT  =============
-
-    //TODO FACTORISER LE CODE ?
-
-    private void onCreateMeetingClicked() {
+    public void onCreateMeetingClicked(View view) {
 
         String meetingSubject = mMeetingSubjectTv.getText().toString();
-        String multiParticipants = multiAutoCompleteTextView.getText().toString();
-
 
         // On vérifie que l'utilisateur a bien indiqué un sujet de réunion
         if (meetingSubject.isEmpty()) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
             myPopUp.setMessage(R.string.error_specify_subject);
-            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-            });
+            myPopUp.setPositiveButton(R.string.ok, null);
             myPopUp.create().show();
             return;
         }
-
 
         // On vérifie que l'utilisateur a bien indiqué une date et une heure de début de réunion
         if (calendarStart == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
             myPopUp.setMessage(R.string.error_specify_start_time);
-            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-            });
+            myPopUp.setPositiveButton(R.string.ok, null);
             myPopUp.create().show();
             return;
         }
-
 
         // On vérifie que l'utilisateur a bien indiqué une heure de fin de réunion
         if (calendarEnd == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
             myPopUp.setMessage(R.string.error_specify_end_time);
-            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-            });
+            myPopUp.setPositiveButton(R.string.ok, null);
             myPopUp.create().show();
             return;
         }
@@ -210,32 +178,25 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         Date startDate = calendarStart.getTime();
         Date endDate = calendarEnd.getTime();
 
-
         // On vérifie que la date de fin n'est pas antérieure à la date de début
         if (startDate.after(endDate)) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
             myPopUp.setMessage(R.string.error_please_select_room);
-            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-            });
+            myPopUp.setPositiveButton(R.string.ok, null);
             myPopUp.create().show();
             return;
         }
-
 
         // On vérifie que l'utilisateur a bien sélectionné une salle de réunion
         if (room == null) {
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
             myPopUp.setMessage(R.string.error_please_select_room);
-            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-            });
+            myPopUp.setPositiveButton(R.string.ok, null);
             myPopUp.create().show();
             return;
         }
-
 
         // On vérifie qu'au moins 1 participant est indiqué
         ArrayList<String> participantNameList = new ArrayList<>();
@@ -251,13 +212,10 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
             myPopUp.setMessage(R.string.error_please_insert_participant);
-            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-            });
+            myPopUp.setPositiveButton(R.string.ok, null);
             myPopUp.create().show();
             return;
         }
-
 
         // On vérifie si la salle est libre
         boolean roomIsFree = true;
@@ -271,27 +229,22 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             AlertDialog.Builder myPopUp = new AlertDialog.Builder(this);
             myPopUp.setTitle(R.string.warning);
             myPopUp.setMessage(R.string.error_room_unavailable);
-            myPopUp.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                // Toast.makeText(getApplicationContext(), "Cliquer sur OK pour continuer", Toast.LENGTH_LONG).show();
-            });
+            myPopUp.setPositiveButton(R.string.ok, null);
             myPopUp.create().show();
             return;
         }
 
-
-        // On transformer liste de String en liste de participants
+        // On transforme la liste de String en liste de participants
         ArrayList<Participant> participantList = new ArrayList<>();
         for (Participant p : mApiService.getParticipants()) {
             if (participantNameList.contains(p.getName())) {
                 participantList.add(0, p);
             }
-
         }
 
         Meeting newMeeting = new Meeting(System.currentTimeMillis(), meetingSubject, startDate, endDate, room, participantList);
         mApiService.addMeeting(newMeeting);
         finish();
-
     }
 
 
@@ -305,18 +258,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
 
     // ========== POPUP ROOM =============
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        String text = adapterView.getItemAtPosition(position).toString();
-        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
     public void roomSelector(View view) {
         // Create list of rooms
 
@@ -330,36 +271,15 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.select_room); // Set title of AlertDialog
         builder.setIcon(R.drawable.icon);
-        builder.setSingleChoiceItems(cs, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                String roomSelected = rooms.get(i);
-                buttonRoom.setText(roomSelected);
-                room = mApiService.getRooms().get(i);
-            }
+        builder.setSingleChoiceItems(cs, -1, (dialogInterface, i) -> {
+            String roomSelected = rooms.get(i);
+            buttonRoom.setText(roomSelected);
+            room = mApiService.getRooms().get(i);
         });
-
-        // Set neutral cancel button
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.setPositiveButton(R.string.ok, null);
         AlertDialog dialog = builder.create();
+
         dialog.show();
-
     }
-    // ======== End Toast Spinner Room end ===========
-
 }
-
-

@@ -1,5 +1,4 @@
 package lamzone.com.model;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +22,6 @@ public class Meeting implements Serializable {
     private Room room;          // n° de la salle
     private List<Participant> participants; // email des particpants
 
-    private boolean isMeetingInFilterList; // boolean pour liste filtrée (ou liste complète)
 
     /**
      * Constructor
@@ -41,13 +39,8 @@ public class Meeting implements Serializable {
         this.room = room;
         this.participants = participants;
 
-        this.isMeetingInFilterList = false;
     }
 
-
-    public long getId() {
-        return id;
-    }
 
     public void setId(long id) {
         this.id = id;
@@ -58,26 +51,14 @@ public class Meeting implements Serializable {
         return subject;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
 
     public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
 
     public Date getEndTime() {
-        return startTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+        return endTime;
     }
 
 
@@ -85,22 +66,9 @@ public class Meeting implements Serializable {
         return room;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
 
     public List<Participant> getParticipants() {
         return participants;
-    }
-
-
-    public boolean isMeetingInFilterList() {
-        return isMeetingInFilterList;
-    }
-
-    public void setMeetingInFilterList(boolean isMeetingInFilterList) {
-        this.isMeetingInFilterList = isMeetingInFilterList;
     }
 
     @Override

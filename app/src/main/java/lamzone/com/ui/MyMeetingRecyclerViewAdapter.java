@@ -1,5 +1,4 @@
 package lamzone.com.ui;
-
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +8,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lamzone.com.R;
@@ -31,7 +26,6 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
 
     // POUR LES DONNEES
     private List<Meeting> mMeetings;
-
 
     // CONSTRUCTOR
     public void setData(List<Meeting> items) {
@@ -79,12 +73,9 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         /* ======================= BOUTON DELETE =======================
          * Quand on clique sur le bouton delete on diffuse un évènement précisant la suppression
          */
-        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(holder.mDeleteButton.getContext(), R.string.toast_deleted_meeting, Toast.LENGTH_SHORT).show();
-                EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
-            }
+        holder.mDeleteButton.setOnClickListener(v -> {
+            Toast.makeText(holder.mDeleteButton.getContext(), R.string.toast_deleted_meeting, Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
         });
 
     }

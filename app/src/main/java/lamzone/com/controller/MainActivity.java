@@ -1,32 +1,24 @@
 package lamzone.com.controller;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import lamzone.com.R;
 import lamzone.com.di.DI;
 import lamzone.com.events.DeleteMeetingEvent;
@@ -57,13 +49,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         rv.setAdapter(adapter);
 
         FloatingActionButton fabBtn = findViewById(R.id.fab_btn);
-        fabBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CreateMeetingActivity.class);
-                startActivity(intent);
-
-            }
+        fabBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, CreateMeetingActivity.class);
+            startActivity(intent);
         });
 
     }
@@ -99,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public void openMeeting(OpenMeetingEvent event) {
         // On ouvre une nouvelle activité (=CreateMeetingActivity)
         Intent intent = new Intent(this, CreateMeetingActivity.class);
-        intent.putExtra("meeting", event.meeting);
         startActivity(intent);
     }
 
@@ -109,9 +96,19 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
      */
     @Subscribe
     public void deleteMeeting(DeleteMeetingEvent deleteMeetingEvent) {
-        mApiService.deleteMeeting(deleteMeetingEvent.getMeeting());
+/*        mApiService.deleteMeeting(deleteMeetingEvent.getMeeting());
+        adapter.setData(mApiService.getMeetings());
+        adapter.notifyDataSetChanged();*/
+
+        mApiService.deleteMeeting(deleteMeetingEvent.meeting);
+        adapter.setData(mApiService.getMeetings());
         adapter.notifyDataSetChanged();
+
+
     }
+
+
+
 
 
     // ==================== FILTRE TOOLBAR ====================
@@ -182,27 +179,17 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         AlertDialog.Builder mbuilder = new AlertDialog.Builder(this);
         mbuilder.setTitle(R.string.alertDialog_select_a_room); // Set title of AlertDialog
         mbuilder.setIcon(R.drawable.icon);
-        mbuilder.setSingleChoiceItems(cs, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                String roomSelected = rooms.get(i);
-                filterItemRoom(roomSelected);
-
-            }
+        mbuilder.setSingleChoiceItems(cs, -1, (dialogInterface, i) -> {
+            String roomSelected = rooms.get(i);
+            filterItemRoom(roomSelected);
 
         });
         // Set neutral cancel button
-        mbuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        mbuilder.setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
 
-            }
         });
 
-        mbuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
+        mbuilder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
         });
 
         AlertDialog mDialog = mbuilder.create();
@@ -226,8 +213,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        //Quelle devrait être la suite du process ici?
-        /* Récupérer les réunions du jour sélectionné */
+        // Je récupère les réunions du jour sélectionné
         List<Meeting> result = mApiService.filterMeetingListForDay(calendar);
 
         // Afficher ses réunions
