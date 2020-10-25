@@ -35,7 +35,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private MeetingApiService mApiService;
     public MyMeetingRecyclerViewAdapter adapter;
     private RecyclerView rv;
+    private State state = State.ALL;
+    private String roomName = null;
+    private Calendar calendar = null;
 
+    private enum State {
+        DATE,
+        ROOM,
+        ALL
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,18 +104,22 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
      */
     @Subscribe
     public void deleteMeeting(DeleteMeetingEvent deleteMeetingEvent) {
-/*        mApiService.deleteMeeting(deleteMeetingEvent.getMeeting());
-        adapter.setData(mApiService.getMeetings());
-        adapter.notifyDataSetChanged();*/
+        mApiService.deleteMeeting(deleteMeetingEvent.getMeeting());
+        switch (state){
+            case ALL:
+                adapter.setData(mApiService.getMeetings());
+                break;
 
-        mApiService.deleteMeeting(deleteMeetingEvent.meeting);
-        adapter.setData(mApiService.getMeetings());
+            case DATE:
+                adapter.setData(mApiService.filterMeetingListForDay(calendar));
+                break;
+
+            case ROOM:
+                adapter.setData(mApiService.filterMeetingListForRoom(roomName));
+                break;
+        }
         adapter.notifyDataSetChanged();
-
-
     }
-
-
 
 
 
@@ -139,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             case R.id.reset:
                 Toast.makeText(this, R.string.menu_reset_meetings, Toast.LENGTH_LONG).show();
                 List<Meeting> meetingsReset = mApiService.getMeetings();
+
+                state = State.ALL;
+
                 adapter.setData(meetingsReset);
                 adapter.notifyDataSetChanged(); // Refresh
                 return true;
@@ -146,11 +161,16 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             case R.id.filter_by_date:
                 Toast.makeText(this, R.string.menu_filter_by_date, Toast.LENGTH_SHORT).show();
                 showDateDialog();
+
+                state = State.DATE;
+
                 return true;
 
             case R.id.filter_by_room:
                 Toast.makeText(this, R.string.menu_filter_by_room, Toast.LENGTH_SHORT).show();
                 roomSelector();
+
+                state = State.ROOM;
 
                 mApiService.getMeetings();
                 adapter.notifyDataSetChanged();
@@ -181,12 +201,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         mbuilder.setIcon(R.drawable.icon);
         mbuilder.setSingleChoiceItems(cs, -1, (dialogInterface, i) -> {
             String roomSelected = rooms.get(i);
+            roomName = roomSelected;
             filterItemRoom(roomSelected);
 
         });
         // Set neutral cancel button
         mbuilder.setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
-
         });
 
         mbuilder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
@@ -208,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -228,8 +248,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
      */
     public void filterItemRoom(String room) {
 
-        //Quelle devrait être la suite du process ici?
-        /* Récupérer les réunions de la salle sélectionnée */
+        // On Récupère les réunions de la salle sélectionnée
         List<Meeting> result = mApiService.filterMeetingListForRoom(room);
 
         // Afficher ses réunions

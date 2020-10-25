@@ -88,7 +88,7 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
 
 
     // On relie les informations à afficher
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_list_color)    // couleur de la salle
         public ImageView mColorRoom;
 

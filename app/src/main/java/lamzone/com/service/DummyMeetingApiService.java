@@ -68,7 +68,7 @@ public class DummyMeetingApiService implements MeetingApiService {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
         // On le compare à notre liste
-        List<Meeting> result = new ArrayList<Meeting>();
+        List<Meeting> result = new ArrayList<>();
         for (Meeting m : meetings) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(m.getStartTime());
@@ -85,13 +85,12 @@ public class DummyMeetingApiService implements MeetingApiService {
 
 
     @Override
-    public List<Meeting> filterMeetingListForRoom(String room) {
+    public List<Meeting> filterMeetingListForRoom(String roomName) {
         // Récupérer la liste de réunions par salle
         List<Meeting> result = new ArrayList<>();
         for (Meeting m : meetings) {
-            String nameRoom = m.getRoom().getName();
 
-            if (nameRoom.equals(room)) {
+            if (m.getRoom().getName().equals(roomName)) {
                 result.add(m);
             }
         }
