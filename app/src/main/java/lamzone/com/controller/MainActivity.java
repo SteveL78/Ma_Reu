@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.DatePicker;
-import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -149,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.reset:
-                Toast.makeText(this, R.string.menu_reset_meetings, Toast.LENGTH_LONG).show();
                 List<Meeting> meetingsReset = mApiService.getMeetings();
 
                 state = State.ALL;
@@ -159,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 return true;
 
             case R.id.filter_by_date:
-                Toast.makeText(this, R.string.menu_filter_by_date, Toast.LENGTH_SHORT).show();
                 showDateDialog();
 
                 state = State.DATE;
@@ -167,13 +164,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 return true;
 
             case R.id.filter_by_room:
-                Toast.makeText(this, R.string.menu_filter_by_room, Toast.LENGTH_SHORT).show();
                 roomSelector();
 
                 state = State.ROOM;
 
-                mApiService.getMeetings();
-                adapter.notifyDataSetChanged();
                 return true;
 
             default:
