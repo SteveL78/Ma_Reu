@@ -74,7 +74,7 @@ public class MainActivityTest {
 
         // On sélectionne le filtre par salle ...
         Espresso.openContextualActionModeOverflowMenu();
-        onView(withText("par salle")).perform(click());
+        onView(withText(R.string.main_menu_filter_by_room)).perform(click());
         onView(withText("Funky Kong")).perform(click());
         onView(withText(android.R.string.ok)).perform(click());
 
@@ -92,13 +92,13 @@ public class MainActivityTest {
 
         // On sélectionne seulement les réunions dans la salle "Funky Kong"
         Espresso.openContextualActionModeOverflowMenu();
-        onView(withText("par salle")).perform(click());
+        onView(withText(R.string.main_menu_filter_by_room)).perform(click());
         onView(withText("Funky Kong")).perform(click());
         onView(withText(android.R.string.ok)).perform(click());
 
         // On sélectionne dans le menu filtre "Réinitialiser les filtres" ...
         Espresso.openContextualActionModeOverflowMenu();
-        onView(withText("Réinitialiser les filtres")).perform(click());
+        onView(withText(R.string.main_menu_reset_filters)).perform(click());
 
         // ... et on vérifie que c'est bien la "Réunion A" qui apparaît à la position 0.
         onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
