@@ -21,7 +21,7 @@
     <string name="main_menu_reset_filters">Réinitialiser les filtres</string>
     <string name="main_menu_filter_by_date">par date</string>
     <string name="main_menu_filter_by_room">par salle</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="select_room">Sélectionner une salle</string>
     <string name="warning">ATTENTION</string>

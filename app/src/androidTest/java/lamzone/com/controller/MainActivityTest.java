@@ -23,6 +23,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static lamzone.com.utils.TestUtils.withRecyclerView;
+import static org.hamcrest.core.IsNot.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -31,9 +32,107 @@ public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
-    @Test
-    public void mainActivityTest() {
 
+    @Test
+    public void createMeeting() {
+
+        // On crée le nouveau meeting ("Communication")
+        createNewMeeting();
+
+        // ... et on vérifie que le meeting apparaît en position 0 ...
+        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
+                .check(matches(withText("Communication")));
+
+        // ... et on le supprime.
+        deleteNewMeeting();
+    }
+
+    @Test
+    public void filterByDate() {
+
+        // On crée le nouveau meeting ("Communication")
+        createNewMeeting();
+
+        // On sélectionne le filtre par date ...
+        Espresso.openContextualActionModeOverflowMenu();
+        onView(withText(R.string.main_menu_filter_by_date)).perform(click());
+        onView(withText(android.R.string.ok)).perform(click());
+
+        //... et on vérifie que la liste contient bien une réunion avec pour objet "Communication"
+        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
+                .check(matches(withText("Communication")));
+
+        // ... et on le supprime.
+        deleteNewMeeting();
+    }
+
+    @Test
+    public void filterByRoom() {
+
+        // On crée le nouveau meeting ("Communication")
+        createNewMeeting();
+
+        // On sélectionne le filtre par salle ...
+        Espresso.openContextualActionModeOverflowMenu();
+        onView(withText("par salle")).perform(click());
+        onView(withText("Funky Kong")).perform(click());
+        onView(withText(android.R.string.ok)).perform(click());
+
+        //... et on vérifie que la liste contient bien une réunion avec pour objet "Communication" ...
+        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
+                .check(matches(withText("Communication")));
+
+        // ... et on le supprime.
+        deleteNewMeeting();
+    }
+
+
+    @Test
+    public void resetFilter() {
+
+        // On sélectionne seulement les réunions dans la salle "Funky Kong"
+        Espresso.openContextualActionModeOverflowMenu();
+        onView(withText("par salle")).perform(click());
+        onView(withText("Funky Kong")).perform(click());
+        onView(withText(android.R.string.ok)).perform(click());
+
+        // On sélectionne dans le menu filtre "Réinitialiser les filtres" ...
+        Espresso.openContextualActionModeOverflowMenu();
+        onView(withText("Réinitialiser les filtres")).perform(click());
+
+        // ... et on vérifie que c'est bien la "Réunion A" qui apparaît à la position 0.
+        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
+                .check(matches(withText("Réunion A")));
+    }
+
+
+    @Test
+    public void deleteMeeting() {
+
+        // On vérifie que la 1ère réunion est bien "Réunion B" (car réunion A suppriméé dans le filtre donc plus présente en 1ère position)...
+        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
+                .check(matches(withText("Réunion B")));
+
+        //... puis on clique sur son bouton delete ...
+        onView(withId(R.id.meetings_list_recyclerView))
+                .perform(TestUtils.actionOnItemViewAtPosition(0, R.id.item_list_delete_button, click()));
+
+        //... et on vérifie que la "Réunion A" n'apparaît plus en position 0
+        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
+                .check(matches(not(withText("Réunion B"))));
+    }
+
+
+    private void deleteNewMeeting() {
+        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
+                .check(matches(withText("Communication")));
+        onView(withId(R.id.meetings_list_recyclerView))
+                .perform(TestUtils.actionOnItemViewAtPosition(0, R.id.item_list_delete_button, click()));
+
+    }
+
+
+    private void createNewMeeting() {
         // On clique sur le FAB pour créer une nouvelle réunion
         onView(withId(R.id.fab_btn)).perform(click());
 
@@ -85,76 +184,11 @@ public class MainActivityTest {
         onView(withId(R.id.multiautocompletetextview)).perform(closeSoftKeyboard());
 
 
-        // On clique sur enregistrer pour finaliser la création de la réunion
+        // On clique sur "Enregistrer" pour finaliser la création de la réunion
         onView(withId(R.id.save_btn)).perform(click());
 
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(700);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // On sélectionne le filtre par salle ...
-        Espresso.openContextualActionModeOverflowMenu();
-        onView(withText("par salle")).perform(click());
-        onView(withText("Funky Kong")).perform(click());
-        onView(withText("OK")).perform(click());
-
-        //... et on vérifie que la liste contient bien une réunion avec pour objet "Communication"
-        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
-                .check(matches(withText("Communication")));
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(250);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // On sélectionne le filtre par date ...
-        Espresso.openContextualActionModeOverflowMenu();
-        onView(withText("par date")).perform(click());
-        onView(withText("OK")).perform(click());
-        //... et on vérifie que la liste contient bien une réunion avec pour objet "Communication"
-        onView(withRecyclerView(R.id.meetings_list_recyclerView).atPositionOnView(0, R.id.item_list_object))
-                .check(matches(withText("Communication")));
-
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        // On sélectionne le filtre réinitialiser les filtres ...
-        Espresso.openContextualActionModeOverflowMenu();
-        onView(withText("Réinitialiser les filtres")).perform(click());
-
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(250);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // ------ SUPPRIMER LA REUNION CREEE ------
-
-        onView(withId(R.id.meetings_list_recyclerView))
-                .perform(TestUtils.actionOnItemViewAtPosition(0, R.id.item_list_delete_button, click()));
-
     }
+
 
 }

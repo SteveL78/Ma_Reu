@@ -26,7 +26,7 @@ public abstract class DummyMeetingGenerator {
             new Meeting(97, "Réunion A", getDate("22/05/2020 15:00"), getDate("22/05/2020 15:37"), RoomGenerator.DUMMY_ROOMS.get(4), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(5))),
             new Meeting(898, "Réunion E", getDate("13/08/2020 11:00"), getDate("13/08/2020 11:45"), RoomGenerator.DUMMY_ROOMS.get(6), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(7))),
             new Meeting(94, "Réunion C", getDate("12/09/2020 18:00"), getDate("13/08/2020 18:45"), RoomGenerator.DUMMY_ROOMS.get(8), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(6))),
-            new Meeting(100, "Réunion D", getDate("12/09/2020 17:00"), getDate("12/092020 17:45"), RoomGenerator.DUMMY_ROOMS.get(7), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(1))),
+            new Meeting(100, "Réunion D", getDate("12/09/2020 17:00"), getDate("12/09/2020 17:45"), RoomGenerator.DUMMY_ROOMS.get(7), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(1))),
             new Meeting(625, "Réunion E", getDate("24/12/2020 12:00"), getDate("24/12/2020 12:45"), RoomGenerator.DUMMY_ROOMS.get(8), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(3))),
             new Meeting(1200, "Réunion C", getDate("31/12/2020 14:00"), getDate("31/12/2020 14:45"), RoomGenerator.DUMMY_ROOMS.get(9), Collections.singletonList(ParticipantGenerator.DUMMY_PARTICIPANTS.get(4)))
     );
